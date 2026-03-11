@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>静岡県（浜松）旅のしおり｜パターン3 ゆったり充電プラン</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:   #00695c;
+      --accent:    #00897b;
+      --accent2:   #8d6e63;
+      --sand:      #e0f2f1;
+      --dark:      #2c2c2c;
+      --mid:       #666;
+      --border:    #b2dfdb;
+      --day1:      #00695c;
+      --day2:      #ad1457;
+      --day3:      #1565c0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #edf8f7; color: var(--dark); line-height: 1.7; }
+
+    .cover {
+      background: linear-gradient(150deg, #004d40 0%, #00695c 40%, #00897b 75%, #8d6e63 100%);
+      color: white; padding: 60px 40px 50px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cover::before { content: "♨️"; font-size: 200px; position: absolute; right: -20px; top: -20px; opacity: 0.08; line-height: 1; }
+    .cover-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 16px; font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+    .cover h1 { font-family: 'Noto Serif JP', serif; font-size: 36px; font-weight: 700; letter-spacing: 3px; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .cover h2 { font-size: 16px; font-weight: 300; opacity: 0.9; margin-bottom: 32px; letter-spacing: 2px; }
+    .cover-meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+    .cover-meta-item { text-align: center; }
+    .cover-meta-item .label { font-size: 10px; opacity: 0.7; letter-spacing: 1px; display: block; margin-bottom: 2px; }
+    .cover-meta-item .value { font-size: 14px; font-weight: 500; }
+
+    .info-bar { background: white; padding: 20px 40px; display: flex; gap: 12px; flex-wrap: wrap; border-bottom: 3px solid var(--primary); }
+    .info-tag { background: var(--sand); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--dark); display: flex; align-items: center; gap: 5px; }
+    .info-tag.warning { background: #fff3e0; border-color: #ffb74d; color: #e65100; }
+    .info-tag.safe    { background: #e8f5e9; border-color: #81c784; color: #2e7d32; }
+    .info-tag.relax   { background: #e0f2f1; border-color: #80cbc4; color: #004d40; font-weight: 700; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px; }
+
+    .section-title { font-family: 'Noto Serif JP', serif; font-size: 13px; letter-spacing: 4px; color: var(--mid); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    .highlight-box { background: var(--sand); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 20px; font-size: 14px; color: var(--mid); }
+    .highlight-box strong { color: var(--dark); }
+
+    .concept-banner {
+      background: linear-gradient(135deg, #e0f2f1, #f0faf9);
+      border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px;
+    }
+    .concept-banner .cb-title { font-weight: 700; font-size: 15px; color: var(--primary); margin-bottom: 10px; }
+    .concept-banner p { font-size: 13px; color: var(--mid); line-height: 1.8; }
+    .concept-points { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+    .concept-point { background: var(--primary); color: white; border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+
+    .day-block { margin-bottom: 40px; }
+    .day-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .day-badge { width: 56px; height: 56px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: 900; flex-shrink: 0; font-size: 11px; letter-spacing: 1px; }
+    .day-badge .num { font-size: 22px; line-height: 1; }
+    .day-badge.d1 { background: var(--day1); }
+    .day-badge.d2 { background: var(--day2); }
+    .day-badge.d3 { background: var(--day3); }
+    .day-title-wrap h3 { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; }
+    .day-title-wrap p { font-size: 12px; color: var(--mid); margin-top: 2px; }
+
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--border), transparent); }
+    .tl-item { position: relative; display: flex; gap: 16px; }
+    .tl-item::before { content: ""; position: absolute; left: -22px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: white; border: 2px solid var(--border); }
+    .tl-item.highlight::before { background: var(--primary); border-color: var(--primary); }
+    .tl-time { font-size: 12px; font-weight: 700; color: var(--mid); min-width: 48px; padding-top: 14px; letter-spacing: 1px; }
+    .tl-card { flex: 1; background: white; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+    .tl-card.highlight { border-color: var(--primary); background: #f0faf9; }
+    .tl-card .title { font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 4px; }
+    .tl-card .title .emoji { margin-right: 6px; }
+    .tl-card .desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+    .tl-card .memo { font-size: 11px; color: #aaa; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #eee; }
+    .return-badge { display: inline-block; background: #27ae60; color: white; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+
+    .tip-box { background: linear-gradient(135deg, #e0f2f1, #f0faf9); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin: 16px 0 32px; font-size: 13px; color: #004d40; }
+    .tip-box .tip-title { font-weight: 700; font-size: 12px; letter-spacing: 1px; color: var(--primary); margin-bottom: 6px; }
+
+    /* Day 3 choice */
+    .choice-section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+    .choice-tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 10px; margin-bottom: 12px; }
+    .choice-tag.a { background: var(--primary); color: white; }
+    .choice-tag.b { background: #8d6e63; color: white; }
+
+    .checklist { background: white; border-radius: 12px; padding: 24px 28px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); margin-bottom: 32px; }
+    .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+    .check-item:last-child { border: none; }
+    .check-box { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+
+    .warn-table { width: 100%; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border-collapse: collapse; margin-bottom: 32px; }
+    .warn-table th { background: var(--primary); color: white; padding: 10px 16px; font-size: 12px; letter-spacing: 1px; text-align: left; }
+    .warn-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .warn-table td:first-child { font-weight: 700; width: 130px; white-space: nowrap; }
+    .warn-table tr:last-child td { border: none; }
+
+    .summary { background: linear-gradient(135deg, #004d40 0%, #00695c 50%, #8d6e63 100%); color: white; border-radius: 16px; padding: 32px; text-align: center; }
+    .summary h3 { font-family: 'Noto Serif JP', serif; font-size: 18px; margin-bottom: 20px; opacity: 0.9; letter-spacing: 2px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    .summary-card { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 12px 8px; }
+    .summary-card .s-label { font-size: 10px; opacity: 0.8; letter-spacing: 1px; margin-bottom: 4px; }
+    .summary-card .s-value { font-size: 13px; font-weight: 700; }
+    .summary-days { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .summary-day { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 16px; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-badge">静岡県（浜松）旅のしおり</div>
+  <h1>ゆったり充電プラン</h1>
+  <h2>温泉リラックス × フラワーパーク × 花鳥園</h2>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span class="label">期間</span><span class="value">GW2026 ・ 2泊3日</span></div>
+    <div class="cover-meta-item"><span class="label">メンバー</span><span class="value">大人2名 ＋ 子供1名（2歳半）</span></div>
+    <div class="cover-meta-item"><span class="label">移動手段</span><span class="value">🚗 マイカー</span></div>
+    <div class="cover-meta-item"><span class="label">宿泊</span><span class="value">浜名湖ロイヤルホテル（2泊）</span></div>
+  </div>
+</div>
+
+<div class="info-bar">
+  <div class="info-tag safe">🌊 津波：舘山寺高台ホテル・浜名湖が緩衝</div>
+  <div class="info-tag relax">♨️ 疲れないスケジュール設計</div>
+  <div class="info-tag">🌷 GWの花の見頃を満喫</div>
+  <div class="info-tag">💤 昼寝タイムを毎日確保</div>
+  <div class="info-tag">🕔 17:30までに宿帰着</div>
+</div>
+
+<div class="container">
+
+  <p class="section-title">このプランについて</p>
+  <div class="highlight-box">
+    <strong>欲張らずに家族のペースを最優先</strong>にしたプラン。
+    1日の観光を1〜2か所に抑え、子供の昼寝・温泉・食事をしっかり確保。
+    「旅行後に疲れた」ではなく「旅行で充電できた」を目指す設計です。
+  </div>
+
+  <div class="concept-banner">
+    <div class="cb-title">🧘 このプランの3つのこだわり</div>
+    <p>無理なスケジュールは2歳児の機嫌を崩し、大人も消耗する。ゆったりした行程こそが旅の質を高める。</p>
+    <div class="concept-points">
+      <div class="concept-point">毎日 昼寝タイムを確保</div>
+      <div class="concept-point">1日1〜2か所に絞る</div>
+      <div class="concept-point">早めのホテル帰還</div>
+    </div>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d1"><span>DAY</span><span class="num">1</span></div>
+      <div class="day-title-wrap">
+        <h3>午後のみ観光 → 早めチェックイン → 温泉</h3>
+        <p>1日目は移動疲れを考慮。のんびり到着して無理しない</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">07:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🏠</span>自宅出発</div><div class="desc">東名・新東名でスムーズに浜松へ。SAで子供の休憩を適宜取りながらゆったり移動。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🅿️</span>浜松到着・SA or 公園で小休憩</div><div class="desc">長距離移動後の子供の気分転換を最優先。焦らずゆっくり。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍜</span>浜松市内でランチ</div><div class="desc">浜松餃子 or 浜名湖うなぎ丼。子供も食べやすいメニューで旅の始まりを祝う。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🏨</span>チェックイン（早期交渉）</div><div class="desc">浜名湖ロイヤルホテル。高台エリアの客室を指定。早チェックインが可能な場合は交渉。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">💤</span>子供 昼寝タイム（移動疲れを回復）</div><div class="desc">大人は温泉・ラウンジでゆったり。2歳児の昼寝は旅のクオリティを決める最重要タスク。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">14:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🌿</span>浜名湖ガーデンパーク（無料）</div><div class="desc">浜名湖花博跡地の広大な無料公園。芝生で子供が自由に走り回る。GW中は色とりどりの花が美しい。のんびり過ごすだけで十分。</div><div class="memo">入場無料。ホテルから車で約10分</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">16:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">♨️</span>ホテル温泉でリフレッシュ</div><div class="desc">浜名湖を眺めながらの入浴。大人の疲れを癒す大切な時間。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🏨</span>ホテル帰還<span class="return-badge">✅ 時間制約クリア</span></div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍽️</span>ホテル夕食（海鮮バイキング推奨）</div><div class="desc">浜名湖の海鮮料理・うなぎ・カキ・アサリを種類豊富に楽しむ。子供も食べやすいバイキング形式。</div></div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 POINT</div>
+      1日目は「移動日」と割り切り、観光を最小限にする。
+      ガーデンパークは無料かつ広大なため、子供が走り回るだけで「観光」になる。
+      早めの温泉→夕食でゆったりした夜を確保することが翌日の活力につながる。
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d2"><span>DAY</span><span class="num">2</span></div>
+      <div class="day-title-wrap">
+        <h3>フラワーパーク → 動物園 → ロープウェイ</h3>
+        <p>GWの花の最盛期を堪能する充実の1日</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">09:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍳</span>ホテル朝食（ゆっくり食べる）</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">09:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🌷</span>はままつフラワーパーク（開園直後）</div><div class="desc">GW期間が年間最高の見頃。チューリップ・藤・バラが一斉に咲き誇る。ベビーカーで広い園内をゆったり散策。子供が芝生を走り回る。大人は花に感動。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🦁</span>浜松市動物園（隣接）</div><div class="desc">ライオン・キリン・サル・ペンギンと対面。2歳半の子供が動物に指を向けて大喜びする。共通券でお得に。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍱</span>昼食（公園周辺 or ホテルに戻って食べる）</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">14:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">💤</span>子供 昼寝タイム（ホテル）</div><div class="desc">疲れが溜まる2日目の昼寝は特に重要。ぐっすり眠らせる。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚡</span>舘山寺ロープウェイ</div><div class="desc">浜名湖上空をロープウェイで渡る非日常体験。2歳児がロープウェイに大喜び。山頂から浜名湖の絶景。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🏨</span>ホテル帰還<span class="return-badge">✅ 時間制約クリア</span></div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍽️</span>夕食（1日目と異なるレストランを選択）</div><div class="desc">浜名湖カキ料理 or 鮮魚の海鮮コース。ゆっくり味わう。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d3"><span>DAY</span><span class="num">3</span></div>
+      <div class="day-title-wrap">
+        <h3>掛川花鳥園 or ゆっくり帰路（選択制）</h3>
+        <p>体力・お子様の機嫌に合わせて選択する最終日</p>
+      </div>
+    </div>
+
+    <div class="choice-section">
+      <div class="choice-tag a">🅰️ 選択肢A：掛川花鳥園に寄り道して帰宅（元気がある場合）</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">08:30</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🍳</span>チェックアウト</div></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-time">09:30</div>
+          <div class="tl-card highlight"><div class="title"><span class="emoji">🦜</span>掛川花鳥園（開園直後・40分移動）</div><div class="desc">温室内でペンギン・フクロウ・インコに餌やり体験。完全屋内で天候関係なし。2歳児が実際に鳥と触れ合える感動体験。</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">11:30</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🍱</span>昼食（掛川周辺）</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">12:30</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🚗</span>帰路へ出発</div></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-time">〜17:30</div>
+          <div class="tl-card highlight"><div class="title"><span class="emoji">🏠</span>自宅着<span class="return-badge">✅ 時間制約クリア</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="choice-section">
+      <div class="choice-tag b">🅱️ 選択肢B：桜えびを食べながらゆっくり帰宅（疲れている場合）</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">09:00</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🍳</span>ホテル朝食・チェックアウト</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">10:00</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🚗</span>帰路へ出発（清水・由比方面経由）</div></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-time">11:30</div>
+          <div class="tl-card highlight"><div class="title"><span class="emoji">🦐</span>清水 or 由比港で昼食（桜えび・しらす丼）</div><div class="desc">GW期間は桜えびの旬。かき揚げ丼・桜えびの刺身・しらす丼など。子供には白飯や味噌汁で対応。帰路の途中に寄るだけでOK。</div><div class="memo">生しらすは天候次第で休みの日あり。事前に確認推奨</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">13:00</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🚗</span>引き続き帰路へ</div></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-time">〜15:00〜17:00</div>
+          <div class="tl-card highlight"><div class="title"><span class="emoji">🏠</span>自宅着（時間に余裕あり）<span class="return-badge">✅ 時間制約クリア</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-title">💡 POINT</div>
+      3日目は子供と大人の疲労具合・当日の天気・気分で柔軟に選択。
+      掛川花鳥園は完全屋内のため雨天でも全力で楽しめる。
+      桜えびルートを選ぶ場合は帰宅時間にたっぷり余裕が生まれる。
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <p class="section-title">持ち物チェックリスト</p>
+  <div class="checklist">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 32px;">
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>ベビーカー（フラワーパーク・ガーデンパーク）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>だっこ紐（混雑場所の移動用）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>日焼け止め・帽子</span></div>
+        <div class="check-item"><div class="check-box"></div><span>レインコート（GW天候対策）</span></div>
+      </div>
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>着替え複数セット</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供のお気に入りおもちゃ（昼寝・移動用）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供の常備薬・絆創膏</span></div>
+        <div class="check-item"><div class="check-box"></div><span>ハザードマップ確認済みであること</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warnings -->
+  <p class="section-title">注意事項</p>
+  <table class="warn-table">
+    <tr><th colspan="2">⚠️ 出発前に必ず確認</th></tr>
+    <tr><td>🌊 津波</td><td>浜松市の津波ハザードマップで浸水深を事前確認。舘山寺の高台側・高層階を指定すること</td></tr>
+    <tr><td>🌷 混雑</td><td>フラワーパークはGW最混雑のため9:00開園直後入場を徹底。駐車場も早朝なら確保しやすい</td></tr>
+    <tr><td>🍽️ 予約</td><td>ホテル2泊・人気レストランはGW1〜2ヶ月前の事前予約が必須</td></tr>
+    <tr><td>🦐 桜えび</td><td>生しらすは漁が休みの日あり（天候依存）。事前に現地食堂へ確認推奨</td></tr>
+    <tr><td>🚗 渋滞</td><td>帰路の東名はGW中渋滞必発。余裕を持った出発を心がける</td></tr>
+  </table>
+
+  <div class="summary">
+    <h3>── 全行程サマリー ──</h3>
+    <div class="summary-days">
+      <div class="summary-day">Day 1　🌿 ガーデンパーク ＋ ♨️ 温泉</div>
+      <div class="summary-day">Day 2　🌷 フラワーパーク ＋ 🦁 動物園</div>
+      <div class="summary-day">Day 3　🦜 花鳥園 or 🦐 桜えび → 帰宅</div>
+    </div>
+    <br>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="s-label">旅後の疲労感</div><div class="s-value">◎ 最も疲れない</div></div>
+      <div class="summary-card"><div class="s-label">温泉・リラックス</div><div class="s-value">★★★★★ 最高評価</div></div>
+      <div class="summary-card"><div class="s-label">子供の機嫌管理</div><div class="s-value">◎ 昼寝毎日確保</div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

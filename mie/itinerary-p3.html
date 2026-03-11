@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三重県 旅のしおり｜パターン3 内陸安全重視プラン</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:   #2e7d32;
+      --primary-light: #388e3c;
+      --accent:    #558b2f;
+      --accent2:   #f57f17;
+      --sand:      #f1f8e9;
+      --dark:      #2c2c2c;
+      --mid:       #666;
+      --border:    #c8e6c9;
+      --day1:      #2e7d32;
+      --day2:      #1565c0;
+      --day3:      #6a1b9a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #edf5ee; color: var(--dark); line-height: 1.7; }
+
+    .cover {
+      background: linear-gradient(150deg, #1b5e20 0%, #2e7d32 45%, #558b2f 100%);
+      color: white; padding: 60px 40px 50px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cover::before { content: "🌿"; font-size: 200px; position: absolute; right: -20px; top: -20px; opacity: 0.08; line-height: 1; }
+    .cover-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 16px; font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+    .cover h1 { font-family: 'Noto Serif JP', serif; font-size: 36px; font-weight: 700; letter-spacing: 3px; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .cover h2 { font-size: 16px; font-weight: 300; opacity: 0.9; margin-bottom: 32px; letter-spacing: 2px; }
+    .cover-meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+    .cover-meta-item { text-align: center; }
+    .cover-meta-item .label { font-size: 10px; opacity: 0.7; letter-spacing: 1px; display: block; margin-bottom: 2px; }
+    .cover-meta-item .value { font-size: 14px; font-weight: 500; }
+
+    .info-bar { background: white; padding: 20px 40px; display: flex; gap: 12px; flex-wrap: wrap; border-bottom: 3px solid var(--primary); }
+    .info-tag { background: var(--sand); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--dark); display: flex; align-items: center; gap: 5px; }
+    .info-tag.warning { background: #fff3e0; border-color: #ffb74d; color: #e65100; }
+    .info-tag.safe    { background: #e8f5e9; border-color: #81c784; color: #1b5e20; font-weight: 700; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px; }
+
+    .section-title { font-family: 'Noto Serif JP', serif; font-size: 13px; letter-spacing: 4px; color: var(--mid); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    .highlight-box { background: var(--sand); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 20px; font-size: 14px; color: var(--mid); }
+    .highlight-box strong { color: var(--dark); }
+
+    .vison-box { background: linear-gradient(135deg, #e8f5e9, #f1f8e9); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 32px; }
+    .vison-box .vison-title { font-weight: 700; font-size: 15px; color: var(--primary); margin-bottom: 10px; }
+    .vison-box p { font-size: 13px; color: var(--mid); line-height: 1.8; }
+
+    .day-block { margin-bottom: 40px; }
+    .day-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .day-badge { width: 56px; height: 56px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: 900; flex-shrink: 0; font-size: 11px; letter-spacing: 1px; }
+    .day-badge .num { font-size: 22px; line-height: 1; }
+    .day-badge.d1 { background: var(--day1); }
+    .day-badge.d2 { background: var(--day2); }
+    .day-badge.d3 { background: var(--day3); }
+    .day-title-wrap h3 { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; }
+    .day-title-wrap p { font-size: 12px; color: var(--mid); margin-top: 2px; }
+
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--border), transparent); }
+    .tl-item { position: relative; display: flex; gap: 16px; }
+    .tl-item::before { content: ""; position: absolute; left: -22px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: white; border: 2px solid var(--border); }
+    .tl-item.highlight::before { background: var(--primary); border-color: var(--primary); }
+    .tl-time { font-size: 12px; font-weight: 700; color: var(--mid); min-width: 48px; padding-top: 14px; letter-spacing: 1px; }
+    .tl-card { flex: 1; background: white; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+    .tl-card.highlight { border-color: var(--primary); background: #f0faf0; }
+    .tl-card .title { font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 4px; }
+    .tl-card .title .emoji { margin-right: 6px; }
+    .tl-card .desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+    .tl-card .memo { font-size: 11px; color: #aaa; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #eee; }
+    .return-badge { display: inline-block; background: #27ae60; color: white; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+
+    .tip-box { background: linear-gradient(135deg, #f9ffe0, #f1f8e9); border: 1px solid #c5e1a5; border-radius: 10px; padding: 16px 20px; margin: 16px 0 32px; font-size: 13px; color: #33691e; }
+    .tip-box .tip-title { font-weight: 700; font-size: 12px; letter-spacing: 1px; color: var(--accent); margin-bottom: 6px; }
+
+    /* Day 3 choice cards */
+    .choice-header { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 12px; letter-spacing: 1px; border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+    .choice-section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+    .choice-tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 10px; margin-bottom: 12px; }
+    .choice-tag.a { background: var(--primary); color: white; }
+    .choice-tag.b { background: var(--accent2); color: white; }
+
+    .checklist { background: white; border-radius: 12px; padding: 24px 28px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); margin-bottom: 32px; }
+    .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+    .check-item:last-child { border: none; }
+    .check-box { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+
+    .warn-table { width: 100%; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border-collapse: collapse; margin-bottom: 32px; }
+    .warn-table th { background: var(--primary); color: white; padding: 10px 16px; font-size: 12px; letter-spacing: 1px; text-align: left; }
+    .warn-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .warn-table td:first-child { font-weight: 700; width: 130px; white-space: nowrap; }
+    .warn-table tr:last-child td { border: none; }
+
+    .summary { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #558b2f 100%); color: white; border-radius: 16px; padding: 32px; text-align: center; }
+    .summary h3 { font-family: 'Noto Serif JP', serif; font-size: 18px; margin-bottom: 20px; opacity: 0.9; letter-spacing: 2px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    .summary-card { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 12px 8px; }
+    .summary-card .s-label { font-size: 10px; opacity: 0.8; letter-spacing: 1px; margin-bottom: 4px; }
+    .summary-card .s-value { font-size: 13px; font-weight: 700; }
+    .summary-days { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .summary-day { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 16px; font-size: 13px; }
+    .safety-star { font-size: 28px; margin-bottom: 8px; display: block; }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-badge">三重県 旅のしおり</div>
+  <h1>内陸安全重視プラン</h1>
+  <h2>VISON（ヴィソン） × 伊勢文化 × 御在所</h2>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span class="label">期間</span><span class="value">GW2026 ・ 2泊3日</span></div>
+    <div class="cover-meta-item"><span class="label">メンバー</span><span class="value">大人2名 ＋ 子供1名（2歳半）</span></div>
+    <div class="cover-meta-item"><span class="label">移動手段</span><span class="value">🚗 マイカー</span></div>
+    <div class="cover-meta-item"><span class="label">宿泊</span><span class="value">VISON 多気町（標高100〜200m）</span></div>
+  </div>
+</div>
+
+<div class="info-bar">
+  <div class="info-tag safe">🌊 津波安全性：3プラン中 最高評価（内陸100m超）</div>
+  <div class="info-tag">🏕️ グランピング低寝具対応</div>
+  <div class="info-tag">⛩️ 伊勢神宮まで30分圏内</div>
+  <div class="info-tag warning">🍽️ レストラン予約は必須</div>
+  <div class="info-tag">🕔 17:30までに宿帰着</div>
+</div>
+
+<div class="container">
+
+  <p class="section-title">このプランについて</p>
+  <div class="highlight-box">
+    <strong>南海トラフ津波リスクを最も徹底して回避</strong>しながら、三重の自然・文化・海鮮をすべて楽しめるプラン。
+    内陸山間部の複合リゾート「VISON」を拠点に、伊勢神宮・鳥羽水族館・御在所ロープウェイまで日帰りで楽しめる理想の設計です。
+  </div>
+
+  <div class="vison-box">
+    <div class="vison-title">🌿 VISON（ヴィソン）について</div>
+    <p>2021年開業、三重県多気町の山あいに広がる日本最大級の複合商業リゾート。
+    ファームエリア・ハーブガーデン・本格温泉・マルシェ・10以上のレストランが一体化。
+    伊勢自動車道「多気ヴィソンスマートIC」直結。伊勢神宮まで車で約30分。
+    <strong>標高100〜200m の山間部に位置し、南海トラフ津波の被害想定域の完全圏外。</strong>
+    グランピング棟はコット・マット形式の低寝具で、お布団就寝の子供にも馴染みやすい環境。</p>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d1"><span>DAY</span><span class="num">1</span></div>
+      <div class="day-title-wrap">
+        <h3>到着 → ヴィソン自然探索 → 温泉</h3>
+        <p>安全な内陸リゾートに到着。広大な自然の中でゆったりリラックス</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">07:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🏠</span>自宅出発</div><div class="desc">伊勢自動車道・多気ヴィソンスマートICへ直結。渋滞を避けるため早朝出発を推奨。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">10:00</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🌿</span>VISON 到着</div><div class="desc">スマートICから直結のためアクセスが非常にスムーズ。駐車場は広大。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🌾</span>ファームエリア・ハーブガーデン散策</div><div class="desc">広い芝生エリアで子供が自由に走り回れる。2歳児が草花を摘んで遊ぶ。ベビーカーで回りやすい設計。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🦐</span>昼食：VISON内の海鮮 or 和食レストラン</div><div class="desc">三重の食材を使ったレストランが10店舗以上集結。海鮮・フレンチ・和食から選択。<strong>事前予約必須。</strong></div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🏕️</span>チェックイン</div><div class="desc">グランピング棟：コット・マット形式で子供の低床就寝に対応。ホテル棟も選択可能。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">💤</span>子供 昼寝タイム</div><div class="desc">グランピングテント内で昼寝。大人はサウナ・温泉へ。内陸の静かな山の空気が心地よい。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🛒</span>マルシェエリア散策</div><div class="desc">三重のお土産・食材を見て回る。伊勢海老・あわびの加工品、地元野菜など。子供も楽しめる雰囲気。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🏕️</span>テント / 客室に戻る<span class="return-badge">✅ 時間制約クリア</span></div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍽️</span>VISON内レストランで夕食</div><div class="desc">伊勢海老料理 or フレンチ・和食のディナー。事前予約でGWでも安心。</div></div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 POINT</div>
+      グランピングのコット（簡易ベッド）は地面に近い低い位置のため、普段お布団で寝ている2歳児でも安心して眠れる。
+      テント内は温度管理されているためGWの夜も快適。子供が「テントで寝る！」と喜ぶ体験になる。
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d2"><span>DAY</span><span class="num">2</span></div>
+      <div class="day-title-wrap">
+        <h3>伊勢神宮 → 鳥羽水族館 → VISON帰還</h3>
+        <p>三重の「定番」を1日でコンパクトに制覇。午後はVISONでゆっくり</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">08:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚗</span>VISON出発</div><div class="desc">伊勢内宮まで約30分。朝の混雑前に移動を完了。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">08:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">⛩️</span>伊勢神宮（内宮）参拝</div><div class="desc">朝一番で空気が澄んでいて最高。神域の森が2歳児にも神秘的。だっこ紐＋ベビーカーを併用。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍡</span>おかげ横丁・おはらい町 食べ歩き</div><div class="desc">伊勢うどん・赤福（できたて）・海老フライ。9〜10時台はまだ比較的空いている。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚗</span>鳥羽水族館へ移動（約25分）</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">11:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🐟</span>鳥羽水族館</div><div class="desc">ジュゴン・ラッコ・イルカ・アシカショーで2歳半が大興奮。2〜3割見れれば子供は大満足。</div><div class="memo">事前オンラインチケット購入を推奨</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🦐</span>昼食：水族館近くの海鮮食堂</div><div class="desc">伊勢海老汁定食・海鮮丼。三重の海の幸をここで堪能。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">14:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚗</span>VISONへ帰還（約1時間）</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">💤</span>子供 昼寝タイム</div><div class="desc">午前中の充実した行程で子供は疲れ気味。しっかり昼寝で回復。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">16:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">♨️</span>大人は温泉・サウナ</div><div class="desc">VISONの本格温泉施設でリフレッシュ。子供が昼寝の間に交代で利用。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🏕️</span>テントに戻る<span class="return-badge">✅ 時間制約クリア</span></div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍽️</span>夕食（1日目と異なる料理を）</div></div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 POINT</div>
+      伊勢神宮→おかげ横丁→鳥羽水族館の動線を午前中に完結させることで、
+      午後はVISONでゆっくり過ごせる効率的な設計。2歳児の体力を後半に温存。
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d3"><span>DAY</span><span class="num">3</span></div>
+      <div class="day-title-wrap">
+        <h3>御在所ロープウェイ or VISON再訪 → 帰路</h3>
+        <p>体力・気分に合わせて2通りの選択肢</p>
+      </div>
+    </div>
+
+    <div class="choice-section">
+      <div class="choice-tag a">🅰️ 選択肢A：御在所ロープウェイ経由帰宅</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">08:30</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🍳</span>朝食・チェックアウト</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">09:30</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🚗</span>御在所ロープウェイへ出発（約1時間）</div></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-time">10:30</div>
+          <div class="tl-card highlight"><div class="title"><span class="emoji">🚡</span>御在所ロープウェイ 乗車</div><div class="desc">標高1,212m。子供がロープウェイに大喜び。山頂からの絶景は大人が感動。内陸・高地のため津波リスクゼロ。</div><div class="memo">強風時は運休の可能性あり。公式で事前確認を</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">12:00</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🍱</span>山頂 or 麓で昼食</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">13:00</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🚗</span>帰路へ出発</div></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-time">〜17:30</div>
+          <div class="tl-card highlight"><div class="title"><span class="emoji">🏠</span>自宅着<span class="return-badge">✅ 時間制約クリア</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="choice-section">
+      <div class="choice-tag b">🅱️ 選択肢B：VISONをもう一度楽しんで帰宅</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">09:00</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🌿</span>VISON 朝散歩・マルシェでモーニング</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">10:30</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🛒</span>お土産・地産品の購入</div><div class="desc">三重のブランド食材・海産物の加工品・ハーブ製品など。</div></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">11:30</div>
+          <div class="tl-card"><div class="title"><span class="emoji">🚗</span>帰路へ出発</div></div>
+        </div>
+        <div class="tl-item highlight">
+          <div class="tl-time">〜15:00〜17:00</div>
+          <div class="tl-card highlight"><div class="title"><span class="emoji">🏠</span>自宅着（時間に余裕あり）<span class="return-badge">✅ 時間制約クリア</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <p class="section-title">持ち物チェックリスト</p>
+  <div class="checklist">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 32px;">
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>だっこ紐（神宮参道・水族館）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>ベビーカー（おかげ横丁用）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>虫除けスプレー（ファームエリア）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供の薄手ブランケット（テント内夜は冷える）</span></div>
+      </div>
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>レインコート（グランピング雨天対策）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>鳥羽水族館チケット（オンライン購入）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>日焼け止め・帽子</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供の常備薬・着替え複数セット</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warnings -->
+  <p class="section-title">注意事項</p>
+  <table class="warn-table">
+    <tr><th colspan="2">⚠️ 出発前に必ず確認</th></tr>
+    <tr><td>🌊 津波</td><td>VISONは内陸山間部のため津波リスクは極めて低い。このプランが3パターン中で最も安全な選択</td></tr>
+    <tr><td>🏕️ 天候</td><td>グランピングは雨天でも対応可能。強風時は注意が必要。GW前後は天候が変わりやすい</td></tr>
+    <tr><td>🍽️ 食事予約</td><td>VISONレストランはGW1〜2ヶ月前の事前予約が必須。当日は満席の可能性が高い</td></tr>
+    <tr><td>🚡 ロープウェイ</td><td>強風・荒天時は運休。3日目出発前に公式サイトで運行状況を確認</td></tr>
+    <tr><td>🚗 渋滞</td><td>帰路の伊勢道・東名阪は渋滞必発。17時前出発が理想的</td></tr>
+  </table>
+
+  <!-- Summary -->
+  <div class="summary">
+    <h3>── 全行程サマリー ──</h3>
+    <div class="summary-days">
+      <div class="summary-day">Day 1　🌿 VISON到着・自然探索</div>
+      <div class="summary-day">Day 2　⛩️ 伊勢神宮 ＋ 🐟 鳥羽水族館</div>
+      <div class="summary-day">Day 3　🚡 御在所 or VISON → 帰宅</div>
+    </div>
+    <br>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="s-label">子供の満足度</div><div class="s-value">★★★★</div></div>
+      <div class="summary-card"><div class="s-label">海鮮の充実度</div><div class="s-value">★★★★★</div></div>
+      <div class="summary-card">
+        <div class="s-label">津波安全性</div>
+        <span class="safety-star">🛡️</span>
+        <div class="s-value">3プラン中 最高評価</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三重県 旅のしおり｜パターン1 王道プラン</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:   #c0392b;
+      --primary-light: #e74c3c;
+      --accent:    #e67e22;
+      --accent-light: #f39c12;
+      --sand:      #fdf6ec;
+      --dark:      #2c2c2c;
+      --mid:       #666;
+      --light:     #f9f9f9;
+      --border:    #e8ddd5;
+      --day1:      #c0392b;
+      --day2:      #e67e22;
+      --day3:      #27ae60;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #f0ebe5;
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    /* ── Cover ── */
+    .cover {
+      background: linear-gradient(150deg, #8b0000 0%, #c0392b 40%, #e67e22 100%);
+      color: white;
+      padding: 60px 40px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: "⛩";
+      font-size: 200px;
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      opacity: 0.08;
+      line-height: 1;
+    }
+    .cover-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 4px 16px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .cover h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .cover h2 {
+      font-size: 16px;
+      font-weight: 300;
+      opacity: 0.9;
+      margin-bottom: 32px;
+      letter-spacing: 2px;
+    }
+    .cover-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .cover-meta-item {
+      text-align: center;
+    }
+    .cover-meta-item .label {
+      font-size: 10px;
+      opacity: 0.7;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .cover-meta-item .value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* ── Info Bar ── */
+    .info-bar {
+      background: white;
+      padding: 20px 40px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 3px solid var(--primary);
+    }
+    .info-tag {
+      background: var(--sand);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .info-tag.warning {
+      background: #fff3e0;
+      border-color: #ffb74d;
+      color: #e65100;
+    }
+    .info-tag.safe {
+      background: #e8f5e9;
+      border-color: #81c784;
+      color: #2e7d32;
+    }
+
+    /* ── Body ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ── Section Header ── */
+    .section-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--mid);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Highlight Box ── */
+    .highlight-box {
+      background: var(--sand);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      color: var(--mid);
+    }
+    .highlight-box strong { color: var(--dark); }
+
+    /* ── Day Card ── */
+    .day-block {
+      margin-bottom: 40px;
+    }
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .day-badge {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      flex-shrink: 0;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+    .day-badge .num { font-size: 22px; line-height: 1; }
+    .day-badge.d1 { background: var(--day1); }
+    .day-badge.d2 { background: var(--day2); }
+    .day-badge.d3 { background: var(--day3); }
+
+    .day-title-wrap h3 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .day-title-wrap p {
+      font-size: 12px;
+      color: var(--mid);
+      margin-top: 2px;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--border), transparent);
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 0;
+      display: flex;
+      gap: 16px;
+    }
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -22px;
+      top: 18px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid var(--border);
+    }
+    .tl-item.highlight::before {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .tl-time {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--mid);
+      min-width: 48px;
+      padding-top: 14px;
+      letter-spacing: 1px;
+    }
+    .tl-card {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .tl-card.highlight {
+      border-color: var(--primary);
+      background: #fff8f7;
+    }
+    .tl-card .title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .tl-card .title .emoji { margin-right: 6px; }
+    .tl-card .desc {
+      font-size: 13px;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+    .tl-card .memo {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #eee;
+    }
+    .return-badge {
+      display: inline-block;
+      background: #27ae60;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* ── Point Box ── */
+    .point-box {
+      background: linear-gradient(135deg, #fff8f0, #fff3e8);
+      border: 1px solid #ffd9b3;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 16px;
+      font-size: 13px;
+      color: #7d4e00;
+    }
+    .point-box .point-title {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    /* ── Checklist ── */
+    .checklist {
+      background: white;
+      border-radius: 12px;
+      padding: 24px 28px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      margin-bottom: 32px;
+    }
+    .checklist h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--dark);
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 13px;
+    }
+    .check-item:last-child { border: none; }
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── Warning Table ── */
+    .warn-table {
+      width: 100%;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      border-collapse: collapse;
+      margin-bottom: 32px;
+    }
+    .warn-table th {
+      background: var(--primary);
+      color: white;
+      padding: 10px 16px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-align: left;
+    }
+    .warn-table td {
+      padding: 12px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .warn-table td:first-child {
+      font-weight: 700;
+      width: 130px;
+      white-space: nowrap;
+    }
+    .warn-table tr:last-child td { border: none; }
+
+    /* ── Summary Box ── */
+    .summary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+    .summary h3 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 18px;
+      margin-bottom: 20px;
+      opacity: 0.9;
+      letter-spacing: 2px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .summary-card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 12px 8px;
+    }
+    .summary-card .s-label {
+      font-size: 10px;
+      opacity: 0.8;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .summary-card .s-value {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .summary-days {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .summary-day {
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+    }
+
+    @media print {
+      body { background: white; }
+      .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ▼ Cover -->
+<div class="cover">
+  <div class="cover-badge">三重県 旅のしおり</div>
+  <h1>王道プラン</h1>
+  <h2>鳥羽水族館 × 伊勢神宮 × 御在所</h2>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="label">期間</span>
+      <span class="value">GW2026 ・ 2泊3日</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">メンバー</span>
+      <span class="value">大人2名 ＋ 子供1名（2歳半）</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">移動手段</span>
+      <span class="value">🚗 マイカー</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">宿泊</span>
+      <span class="value">鳥羽国際ホテル（高台）</span>
+    </div>
+  </div>
+</div>
+
+<!-- ▼ Info Bar -->
+<div class="info-bar">
+  <div class="info-tag safe">🌊 津波：高台ホテルで相対的に安全</div>
+  <div class="info-tag">🐟 鳥羽水族館（事前チケット必須）</div>
+  <div class="info-tag">⛩️ 伊勢神宮は早朝参拝推奨</div>
+  <div class="info-tag warning">🚗 GW渋滞注意：早朝出発必須</div>
+  <div class="info-tag">🕔 17:30までに宿帰着</div>
+</div>
+
+<!-- ▼ Body -->
+<div class="container">
+
+  <p class="section-title">このプランについて</p>
+  <div class="highlight-box">
+    <strong>子供が水族館で大興奮できる1日目</strong>を確保しつつ、
+    大人は<strong>伊勢神宮・おかげ横丁・新鮮な伊勢海老</strong>も満喫できる三重の王道ルート。
+    宿泊は高台立地の鳥羽国際ホテルで、相対的に津波リスクを抑えた設計です。
+  </div>
+
+  <!-- ▼ Day 1 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d1">
+        <span>DAY</span>
+        <span class="num">1</span>
+      </div>
+      <div class="day-title-wrap">
+        <h3>移動 → 鳥羽水族館 → チェックイン</h3>
+        <p>高速道路で一気に鳥羽へ。日本最大級の水族館でテンションMAX</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">06:30</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🏠</span>自宅出発</div>
+          <div class="desc">GW渋滞を避けるため早朝出発が鉄則。SAで軽食・休憩を適宜取りながら移動。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🅿️</span>鳥羽市着・休憩</div>
+          <div class="desc">コンビニ or SA でおむつ替え・授乳。子供の気分をリセット。</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">10:30</div>
+        <div class="tl-card highlight">
+          <div class="title"><span class="emoji">🐟</span>鳥羽水族館 入館</div>
+          <div class="desc">日本最大級・日本で唯一ジュゴンを飼育。ラッコ・イルカ・アシカショーで2歳半が大興奮。</div>
+          <div class="memo">⚡ 事前オンラインチケット購入必須｜9:00着でも入場待ちが出るため早着を推奨</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🦐</span>昼食：港近くの海鮮食堂</div>
+          <div class="desc">伊勢海老汁定食・海鮮丼など。子供用に白飯・おにぎり・うどんを事前準備、または子供メニューあり店舗を選択。</div>
+          <div class="memo">GW中は予約が理想。飛び込みは15〜30分待ちも</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">14:30</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🏨</span>チェックイン</div>
+          <div class="desc">高台側・和室プランを指定。布団での就寝で2歳児の安心感UP。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">💤</span>子供 昼寝タイム</div>
+          <div class="desc">移動の疲れを回復させる大切な時間。大人は温泉・ラウンジでゆったりリラックス。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight">
+          <div class="title"><span class="emoji">🏨</span>ホテル帰還<span class="return-badge">✅ 時間制約クリア</span></div>
+          <div class="desc">この時間以降はホテルでゆったり過ごす。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🍽️</span>ホテル夕食</div>
+          <div class="desc">海鮮バイキング or 個室懐石。伊勢海老・あわび・旬の地魚を味わう。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▼ Day 2 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d2">
+        <span>DAY</span>
+        <span class="num">2</span>
+      </div>
+      <div class="day-title-wrap">
+        <h3>伊勢神宮 → おかげ横丁 → 夫婦岩</h3>
+        <p>早朝の清々しい参拝と食べ歩きで日本文化を体験</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">07:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🚗</span>ホテル出発（早朝移動）</div>
+          <div class="desc">混雑が始まる前に移動を完了させる。伊勢神宮まで約25分。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">07:30</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🐸</span>夫婦岩（二見興玉神社）</div>
+          <div class="desc">カエルの置物が並ぶ愛らしい神社。朝の海が静かで美しい。子供がカエルを指差して笑う。</div>
+          <div class="memo">見学時間 約15〜20分。駐車場あり</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">08:30</div>
+        <div class="tl-card highlight">
+          <div class="title"><span class="emoji">⛩️</span>伊勢神宮（内宮）参拝</div>
+          <div class="desc">朝8時台の参拝が最も清々しく空いている。神域の森の空気が2歳児にも心地よい。だっこ紐＋ベビーカーを併用で石畳もOK。</div>
+          <div class="memo">参拝所要時間：約60〜90分</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:30</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🍡</span>おかげ横丁・おはらい町 食べ歩き</div>
+          <div class="desc">伊勢うどん・赤福（できたて）・海老フライを食べながら散策。GW中は人出が多いためだっこ紐推奨。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🦐</span>昼食：おはらい町の海鮮食堂</div>
+          <div class="desc">てこね寿司（三重の郷土料理）・伊勢海老汁セット。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🚗</span>ホテルへ帰還（約25分）</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:30</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">💤</span>子供 昼寝タイム</div>
+          <div class="desc">午前中たっぷり歩いた後の昼寝は必須。大人はゆっくり温泉・読書。</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🛁</span>家族で大浴場・ホテルプール</div>
+          <div class="desc">幼児も入れる浴場・プールを事前確認の上利用。</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight">
+          <div class="title"><span class="emoji">🏨</span>ホテル帰還<span class="return-badge">✅ 時間制約クリア</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🍽️</span>ホテル夕食（贅沢に）</div>
+          <div class="desc">2日目は伊勢海老の姿盛り・あわびの踊り焼きなど三重の高級食材を楽しむ。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▼ Day 3 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d3">
+        <span>DAY</span>
+        <span class="num">3</span>
+      </div>
+      <div class="day-title-wrap">
+        <h3>御在所ロープウェイ → 帰路</h3>
+        <p>内陸の絶景スポットで旅を締めくくる</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">08:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🍳</span>ホテル朝食・荷造り・チェックアウト</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">09:00</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🚗</span>御在所ロープウェイへ出発（約1時間）</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">10:00</div>
+        <div class="tl-card highlight">
+          <div class="title"><span class="emoji">🚡</span>御在所ロープウェイ 乗車</div>
+          <div class="desc">標高1,212mへ。乗り物が大好きな2歳児がロープウェイに大喜び。山頂からの絶景は大人が感動。内陸・高地のため津波リスクゼロ。</div>
+          <div class="memo">強風時は運休の場合あり。公式サイトで事前確認推奨</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:30</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🍱</span>山頂 or 麓で昼食</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:30</div>
+        <div class="tl-card">
+          <div class="title"><span class="emoji">🚗</span>帰路へ出発</div>
+          <div class="desc">渋滞情報を確認し、余裕を持った帰宅ルートを選択。</div>
+        </div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">〜17:30</div>
+        <div class="tl-card highlight">
+          <div class="title"><span class="emoji">🏠</span>自宅着<span class="return-badge">✅ 時間制約クリア</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▼ Checklist -->
+  <p class="section-title">持ち物チェックリスト</p>
+  <div class="checklist">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 32px;">
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>オンライン購入済みの鳥羽水族館チケット</span></div>
+        <div class="check-item"><div class="check-box"></div><span>だっこ紐（おかげ横丁・神宮の混雑対策）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>ベビーカー（水族館・神宮参道）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供の昼食用おにぎり・おやつ</span></div>
+      </div>
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>着替え（水族館・プール用）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>日焼け止め・帽子</span></div>
+        <div class="check-item"><div class="check-box"></div><span>ブランケット（車内・昼寝用）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供の常備薬・絆創膏</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ▼ Warnings -->
+  <p class="section-title">注意事項</p>
+  <table class="warn-table">
+    <tr><th colspan="2">⚠️ 出発前に必ず確認</th></tr>
+    <tr><td>🌊 津波</td><td>ホテルの津波避難計画・上層階確保を事前に問い合わせて確認する</td></tr>
+    <tr><td>🚗 渋滞</td><td>GW中の伊勢道は渋滞必発。カーナビのリアルタイム渋滞確認と早朝出発を徹底</td></tr>
+    <tr><td>🍽️ 食事予約</td><td>人気レストランはGW1〜2ヶ月前の予約が必須。当日飛び込みは長時間待ちの可能性</td></tr>
+    <tr><td>🎫 チケット</td><td>鳥羽水族館はオンライン事前購入で窓口の長蛇の列を回避</td></tr>
+    <tr><td>🚡 ロープウェイ</td><td>強風・荒天時は運休。3日目出発前に公式サイトで運行状況を確認</td></tr>
+  </table>
+
+  <!-- ▼ Summary -->
+  <div class="summary">
+    <h3>── 全行程サマリー ──</h3>
+    <div class="summary-days">
+      <div class="summary-day">Day 1　🐟 鳥羽水族館</div>
+      <div class="summary-day">Day 2　⛩️ 伊勢神宮 ＋ おかげ横丁</div>
+      <div class="summary-day">Day 3　🚡 御在所ロープウェイ</div>
+    </div>
+    <br>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="s-label">子供の満足度</div>
+        <div class="s-value">★★★★★</div>
+      </div>
+      <div class="summary-card">
+        <div class="s-label">海鮮の充実度</div>
+        <div class="s-value">★★★★★</div>
+      </div>
+      <div class="summary-card">
+        <div class="s-label">津波安全性</div>
+        <div class="s-value">◯ 高台ホテル</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

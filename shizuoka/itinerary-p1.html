@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>静岡県（浜松）旅のしおり｜パターン1 フラワーパーク×花鳥園</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:   #ad1457;
+      --accent:    #f06292;
+      --accent2:   #00838f;
+      --sand:      #fce4ec;
+      --dark:      #2c2c2c;
+      --mid:       #666;
+      --border:    #f8bbd9;
+      --day1:      #ad1457;
+      --day2:      #6a1b9a;
+      --day3:      #00838f;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #fdf0f5; color: var(--dark); line-height: 1.7; }
+
+    .cover {
+      background: linear-gradient(150deg, #880e4f 0%, #ad1457 40%, #f06292 80%, #00838f 100%);
+      color: white; padding: 60px 40px 50px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cover::before { content: "🌷"; font-size: 200px; position: absolute; right: -20px; top: -20px; opacity: 0.08; line-height: 1; }
+    .cover-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 16px; font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+    .cover h1 { font-family: 'Noto Serif JP', serif; font-size: 36px; font-weight: 700; letter-spacing: 3px; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .cover h2 { font-size: 16px; font-weight: 300; opacity: 0.9; margin-bottom: 32px; letter-spacing: 2px; }
+    .cover-meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+    .cover-meta-item { text-align: center; }
+    .cover-meta-item .label { font-size: 10px; opacity: 0.7; letter-spacing: 1px; display: block; margin-bottom: 2px; }
+    .cover-meta-item .value { font-size: 14px; font-weight: 500; }
+
+    .info-bar { background: white; padding: 20px 40px; display: flex; gap: 12px; flex-wrap: wrap; border-bottom: 3px solid var(--primary); }
+    .info-tag { background: var(--sand); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--dark); display: flex; align-items: center; gap: 5px; }
+    .info-tag.warning { background: #fff3e0; border-color: #ffb74d; color: #e65100; }
+    .info-tag.safe    { background: #e8f5e9; border-color: #81c784; color: #2e7d32; }
+    .info-tag.flower  { background: #fce4ec; border-color: #f48fb1; color: #880e4f; font-weight: 700; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 20px; }
+
+    .section-title { font-family: 'Noto Serif JP', serif; font-size: 13px; letter-spacing: 4px; color: var(--mid); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    .highlight-box { background: var(--sand); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 16px 20px; margin-bottom: 20px; font-size: 14px; color: var(--mid); }
+    .highlight-box strong { color: var(--dark); }
+
+    /* GW season banner */
+    .season-banner {
+      background: linear-gradient(135deg, #e91e63, #f06292);
+      color: white; border-radius: 12px; padding: 16px 24px; margin-bottom: 32px; text-align: center;
+    }
+    .season-banner .sb-title { font-size: 14px; font-weight: 700; letter-spacing: 2px; margin-bottom: 4px; }
+    .season-banner .sb-desc { font-size: 13px; opacity: 0.9; }
+
+    .day-block { margin-bottom: 40px; }
+    .day-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .day-badge { width: 56px; height: 56px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: 900; flex-shrink: 0; font-size: 11px; letter-spacing: 1px; }
+    .day-badge .num { font-size: 22px; line-height: 1; }
+    .day-badge.d1 { background: var(--day1); }
+    .day-badge.d2 { background: var(--day2); }
+    .day-badge.d3 { background: var(--day3); }
+    .day-title-wrap h3 { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; }
+    .day-title-wrap p { font-size: 12px; color: var(--mid); margin-top: 2px; }
+
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--border), transparent); }
+    .tl-item { position: relative; display: flex; gap: 16px; }
+    .tl-item::before { content: ""; position: absolute; left: -22px; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: white; border: 2px solid var(--border); }
+    .tl-item.highlight::before { background: var(--primary); border-color: var(--primary); }
+    .tl-time { font-size: 12px; font-weight: 700; color: var(--mid); min-width: 48px; padding-top: 14px; letter-spacing: 1px; }
+    .tl-card { flex: 1; background: white; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border: 1px solid var(--border); }
+    .tl-card.highlight { border-color: var(--primary); background: #fff0f5; }
+    .tl-card .title { font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 4px; }
+    .tl-card .title .emoji { margin-right: 6px; }
+    .tl-card .desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+    .tl-card .memo { font-size: 11px; color: #aaa; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #eee; }
+    .return-badge { display: inline-block; background: #27ae60; color: white; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+
+    .tip-box { background: linear-gradient(135deg, #fce4ec, #fff0f8); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin: 16px 0 32px; font-size: 13px; color: #7d2b4a; }
+    .tip-box .tip-title { font-weight: 700; font-size: 12px; letter-spacing: 1px; color: var(--primary); margin-bottom: 6px; }
+
+    .checklist { background: white; border-radius: 12px; padding: 24px 28px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); margin-bottom: 32px; }
+    .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+    .check-item:last-child { border: none; }
+    .check-box { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0; margin-top: 2px; }
+
+    .warn-table { width: 100%; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.06); border-collapse: collapse; margin-bottom: 32px; }
+    .warn-table th { background: var(--primary); color: white; padding: 10px 16px; font-size: 12px; letter-spacing: 1px; text-align: left; }
+    .warn-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .warn-table td:first-child { font-weight: 700; width: 130px; white-space: nowrap; }
+    .warn-table tr:last-child td { border: none; }
+
+    .summary { background: linear-gradient(135deg, #880e4f 0%, #ad1457 50%, #00838f 100%); color: white; border-radius: 16px; padding: 32px; text-align: center; }
+    .summary h3 { font-family: 'Noto Serif JP', serif; font-size: 18px; margin-bottom: 20px; opacity: 0.9; letter-spacing: 2px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    .summary-card { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 12px 8px; }
+    .summary-card .s-label { font-size: 10px; opacity: 0.8; letter-spacing: 1px; margin-bottom: 4px; }
+    .summary-card .s-value { font-size: 13px; font-weight: 700; }
+    .summary-days { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .summary-day { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 16px; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-badge">静岡県（浜松）旅のしおり</div>
+  <h1>自然満喫プラン</h1>
+  <h2>フラワーパーク × 動物園 × 掛川花鳥園</h2>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span class="label">期間</span><span class="value">GW2026 ・ 2泊3日</span></div>
+    <div class="cover-meta-item"><span class="label">メンバー</span><span class="value">大人2名 ＋ 子供1名（2歳半）</span></div>
+    <div class="cover-meta-item"><span class="label">移動手段</span><span class="value">🚗 マイカー</span></div>
+    <div class="cover-meta-item"><span class="label">宿泊</span><span class="value">浜名湖ロイヤルホテル（舘山寺温泉）</span></div>
+  </div>
+</div>
+
+<div class="info-bar">
+  <div class="info-tag safe">🌊 津波：舘山寺高台エリア・浜名湖が緩衝</div>
+  <div class="info-tag flower">🌷 GW期間が花の見頃ピーク！</div>
+  <div class="info-tag">🐦 掛川花鳥園：雨天でも完全屋内</div>
+  <div class="info-tag warning">🚗 フラワーパーク開園直後入場推奨</div>
+  <div class="info-tag">🕔 17:30までに宿帰着</div>
+</div>
+
+<div class="container">
+
+  <p class="section-title">このプランについて</p>
+  <div class="highlight-box">
+    <strong>GW期間に花の見頃がピークを迎えるフラワーパーク</strong>からスタートし、
+    隣接する動物園・翌日の掛川花鳥園で動物の触れ合いを体験。
+    子供の感動が最大化される構成。宿泊は浜名湖高台の温泉ホテルで大人もリラックス。
+  </div>
+
+  <div class="season-banner">
+    <div class="sb-title">🌸 GW2026 はままつフラワーパーク 見頃情報</div>
+    <div class="sb-desc">チューリップ ／ フジ ／ バラ　が 一斉に見頃を迎える年に一度の最高のタイミング</div>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d1"><span>DAY</span><span class="num">1</span></div>
+      <div class="day-title-wrap">
+        <h3>フラワーパーク → 動物園 → チェックイン</h3>
+        <p>GW最盛期の花と動物で子供が大喜び。開園直後の入場が鉄則</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">06:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🏠</span>自宅出発</div><div class="desc">東名・新東名でスムーズに浜松へ。GW渋滞を考慮した早朝出発。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">09:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🌷</span>はままつフラワーパーク 開園直後入場</div><div class="desc">GW期間はチューリップ・藤・バラが一斉に見頃。広い園内をベビーカーで散策。子供が芝生を走り回る。大人は色とりどりの花に感動。</div><div class="memo">⚡ 開園直後（9:00〜9:30）に入場することで混雑前に快適に周れる</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🦁</span>浜松市動物園（フラワーパーク隣接）</div><div class="desc">ライオン・キリン・サル・ペンギンを間近で。2歳半の子供が目を輝かせる。フラワーパークとの共通券がお得。</div><div class="memo">共通券で入場。フラワーパークから歩いてすぐ</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍜</span>昼食：周辺の食事処（浜名湖うなぎ推奨）</div><div class="desc">浜松名物の蒲焼き・うな重。子供は細かく刻んで食べやすく。あるいは子供メニューがある和食店を選択。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚗</span>舘山寺温泉（ホテル）へ移動（約15分）</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">14:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🏨</span>チェックイン</div><div class="desc">浜名湖ロイヤルホテル。舘山寺の丘の上に位置し、高台エリアで津波リスク低。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">14:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">💤</span>子供 昼寝タイム</div><div class="desc">大人は浜名湖を眺めながら温泉でリフレッシュ。</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">16:00</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🚡</span>舘山寺ロープウェイ</div><div class="desc">浜名湖上空をロープウェイで渡る。乗り物好きな子供が大喜び。山頂から浜名湖の絶景を一望。</div><div class="memo">ホテルから車で約5分。所要30〜60分</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🏨</span>ホテル帰還<span class="return-badge">✅ 時間制約クリア</span></div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍽️</span>ホテル夕食</div><div class="desc">浜名湖の海鮮料理・うなぎ・カキ・アサリを使った会席。子供向けメニューも確認。</div></div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 POINT</div>
+      GWははままつフラワーパークが年間で最も美しい時期。開園直後に入場することで、
+      混雑前に広い園内をゆったり散策できる。フラワーパーク→動物園はセット券でお得。
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d2"><span>DAY</span><span class="num">2</span></div>
+      <div class="day-title-wrap">
+        <h3>掛川花鳥園 → 浜名湖遊覧</h3>
+        <p>鳥と触れ合う感動体験。雨天でも完全屋内で楽しめる</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">09:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍳</span>ホテル朝食後、出発</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">09:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🦜</span>掛川花鳥園 到着（開園直後）</div><div class="desc">温室内でペンギン・オオハシ・フクロウ・インコに直接餌やり体験。2歳半の子供の目の高さに鳥が降りてくる感動体験。大人も初めての非日常体験に驚く。</div><div class="memo">⚡ 完全屋内施設のため雨天でも問題なし。ホテルから車で約40分</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍱</span>昼食：掛川周辺の食事処</div><div class="desc">海鮮・和食。掛川駅周辺にも選択肢あり。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">13:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚗</span>ホテルへ帰還（約40分）</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">14:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">💤</span>子供 昼寝タイム</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">15:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚢</span>浜名湖遊覧船</div><div class="desc">浜名湖をクルーズする30〜40分の遊覧。船に乗る体験が2歳児に楽しい。湖上から眺める浜名湖は美しい。</div><div class="memo">天候・運行状況は事前確認を</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">17:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🏨</span>ホテル帰還<span class="return-badge">✅ 時間制約クリア</span></div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">18:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍽️</span>夕食（前夜と異なる料理を）</div><div class="desc">浜名湖産のカキ・アサリ料理 or 地元海鮮料理。</div></div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 POINT</div>
+      掛川花鳥園は「フクロウに餌やり」「ペンギンに触れる」など、2歳半の子供が実際に動物と触れ合える施設。
+      完全温室屋内のため雨天でも全力で楽しめる安心感がある。
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-block">
+    <div class="day-header">
+      <div class="day-badge d3"><span>DAY</span><span class="num">3</span></div>
+      <div class="day-title-wrap">
+        <h3>浜名湖ガーデンパーク → 帰路</h3>
+        <p>最終日は無料の大型公園で子供を自由に遊ばせてから帰宅</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-time">08:00</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍳</span>ホテル朝食・チェックアウト</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">08:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🌿</span>浜名湖ガーデンパーク（無料）</div><div class="desc">浜名湖花博の跡地を整備した広大な無料公園。GW中は花々が美しく、子供が走り回れる芝生が広がる。遊具エリアで最後の遊び時間。</div><div class="memo">入場無料。駐車場あり</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">10:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🛍️</span>浜松市内でお土産購入</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">11:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🍜</span>昼食：浜松餃子 or うなぎ丼</div><div class="desc">帰路途中で浜松名物を最後に食べて締めくくり。</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">12:30</div>
+        <div class="tl-card"><div class="title"><span class="emoji">🚗</span>帰路へ出発</div></div>
+      </div>
+      <div class="tl-item highlight">
+        <div class="tl-time">〜17:30</div>
+        <div class="tl-card highlight"><div class="title"><span class="emoji">🏠</span>自宅着<span class="return-badge">✅ 時間制約クリア</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <p class="section-title">持ち物チェックリスト</p>
+  <div class="checklist">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 32px;">
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>ベビーカー（フラワーパーク・ガーデンパーク）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>だっこ紐（動物園・花鳥園の混雑対策）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>日焼け止め・帽子（屋外施設）</span></div>
+        <div class="check-item"><div class="check-box"></div><span>レインコート（GWは天候不安定）</span></div>
+      </div>
+      <div>
+        <div class="check-item"><div class="check-box"></div><span>着替え複数セット</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供のおやつ・補食</span></div>
+        <div class="check-item"><div class="check-box"></div><span>子供の常備薬</span></div>
+        <div class="check-item"><div class="check-box"></div><span>浜名湖・浜松ハザードマップ確認済みであること</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warnings -->
+  <p class="section-title">注意事項</p>
+  <table class="warn-table">
+    <tr><th colspan="2">⚠️ 出発前に必ず確認</th></tr>
+    <tr><td>🌊 津波</td><td>浜松市の津波ハザードマップで宿泊ホテルの浸水深を事前確認。舘山寺高台側の客室を指定することを推奨</td></tr>
+    <tr><td>🌷 混雑</td><td>フラワーパークGW中は駐車場が満車になることがある。早朝（9:00前後）到着が必須</td></tr>
+    <tr><td>🍽️ 予約</td><td>ホテル・人気レストランはGW1〜2ヶ月前の事前予約が必須</td></tr>
+    <tr><td>🚗 渋滞</td><td>東名・新東名はGW中に大渋滞。帰路は余裕を持った出発時間を設定</td></tr>
+    <tr><td>☔ 雨天</td><td>掛川花鳥園は完全屋内のため雨天時でも問題なし。2日目が雨でも安心</td></tr>
+  </table>
+
+  <div class="summary">
+    <h3>── 全行程サマリー ──</h3>
+    <div class="summary-days">
+      <div class="summary-day">Day 1　🌷 フラワーパーク ＋ 🦁 動物園</div>
+      <div class="summary-day">Day 2　🦜 掛川花鳥園 ＋ 🚢 遊覧船</div>
+      <div class="summary-day">Day 3　🌿 ガーデンパーク → 帰路</div>
+    </div>
+    <br>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="s-label">子供の満足度</div><div class="s-value">★★★★★</div></div>
+      <div class="summary-card"><div class="s-label">大人の満足度</div><div class="s-value">★★★★★</div></div>
+      <div class="summary-card"><div class="s-label">雨天対応</div><div class="s-value">◯ Day2は屋内</div></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
