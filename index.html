@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GW2026 旅のしおり｜家族旅行プラン</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --mie:     #c0392b;
+      --shizu:   #ad1457;
+      --dark:    #2c2c2c;
+      --mid:     #666;
+      --bg:      #f5f1ed;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: var(--bg); color: var(--dark); }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(150deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      color: white; text-align: center; padding: 72px 24px 60px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: "✈️"; font-size: 280px; position: absolute;
+      left: 50%; top: 50%; transform: translate(-50%, -50%);
+      opacity: 0.04; line-height: 1; pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px; padding: 5px 18px; font-size: 12px; letter-spacing: 3px; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif JP', serif; font-size: clamp(28px, 6vw, 48px); font-weight: 700;
+      letter-spacing: 4px; margin-bottom: 12px; text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .hero p { font-size: 15px; opacity: 0.8; letter-spacing: 1px; margin-bottom: 36px; }
+    .hero-chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .hero-chip {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px; padding: 6px 16px; font-size: 13px;
+    }
+
+    /* ── Body ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 52px 20px; }
+
+    /* ── Section ── */
+    .pref-section { margin-bottom: 52px; }
+    .pref-header {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+      padding-bottom: 14px; border-bottom: 2px solid;
+    }
+    .pref-header.mie   { border-color: var(--mie); }
+    .pref-header.shizu { border-color: var(--shizu); }
+    .pref-icon { font-size: 36px; }
+    .pref-title { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+    .pref-sub   { font-size: 13px; color: var(--mid); margin-top: 2px; }
+
+    /* ── Plan Cards ── */
+    .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+
+    .plan-card {
+      background: white; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-decoration: none; color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s; display: block;
+    }
+    .plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.14); }
+
+    .card-top {
+      height: 8px;
+    }
+    .card-top.mie1 { background: linear-gradient(90deg, #c0392b, #e67e22); }
+    .card-top.mie2 { background: linear-gradient(90deg, #1565c0, #ff6f00); }
+    .card-top.mie3 { background: linear-gradient(90deg, #2e7d32, #558b2f); }
+    .card-top.siz1 { background: linear-gradient(90deg, #ad1457, #00838f); }
+    .card-top.siz2 { background: linear-gradient(90deg, #e65100, #558b2f); }
+    .card-top.siz3 { background: linear-gradient(90deg, #00695c, #8d6e63); }
+
+    .card-body { padding: 20px 20px 22px; }
+
+    .card-num {
+      display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      color: var(--mid); background: #f0f0f0; border-radius: 4px;
+      padding: 2px 8px; margin-bottom: 10px;
+    }
+    .card-title {
+      font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 700;
+      line-height: 1.4; margin-bottom: 6px; color: var(--dark);
+    }
+    .card-sub { font-size: 12px; color: var(--mid); line-height: 1.6; margin-bottom: 14px; }
+
+    .card-days { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .card-day {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--dark);
+    }
+    .day-dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    }
+
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .card-tag {
+      font-size: 10px; border-radius: 4px; padding: 2px 8px; font-weight: 500;
+    }
+    .tag-safety-hi  { background: #e8f5e9; color: #1b5e20; }
+    .tag-safety-mid { background: #fff8e1; color: #f57f17; }
+    .tag-safety-lo  { background: #fff3e0; color: #e65100; }
+    .tag-kids       { background: #fce4ec; color: #880e4f; }
+    .tag-relax      { background: #e0f2f1; color: #004d40; }
+    .tag-nature     { background: #f1f8e9; color: #33691e; }
+    .tag-food       { background: #fff3e0; color: #bf360c; }
+
+    .card-arrow {
+      display: flex; align-items: center; justify-content: flex-end;
+      font-size: 20px; margin-top: 8px; opacity: 0.3;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: #1a1a2e; color: rgba(255,255,255,0.5);
+      text-align: center; padding: 24px; font-size: 12px; letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ▼ Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">GW2026 旅のしおり</div>
+  <h1>家族旅行プラン集</h1>
+  <p>大人2名 ＋ 子供1名（2歳半）・ マイカー旅行・2泊3日</p>
+  <div class="hero-chips">
+    <div class="hero-chip">🗾 三重県 3プラン</div>
+    <div class="hero-chip">🗾 静岡県（浜松）3プラン</div>
+    <div class="hero-chip">🌊 津波リスク評価済み</div>
+    <div class="hero-chip">🕔 17:30帰着設計</div>
+  </div>
+</div>
+
+<!-- ▼ Body -->
+<div class="container">
+
+  <!-- ▼ 三重県 -->
+  <div class="pref-section">
+    <div class="pref-header mie">
+      <div class="pref-icon">⛩️</div>
+      <div>
+        <div class="pref-title">三重県</div>
+        <div class="pref-sub">伊勢神宮・鳥羽・御在所ロープウェイ・浜松名物グルメ</div>
+      </div>
+    </div>
+
+    <div class="plan-grid">
+
+      <!-- Mie P1 -->
+      <a class="plan-card" href="mie/itinerary-p1.html">
+        <div class="card-top mie1"></div>
+        <div class="card-body">
+          <div class="card-num">パターン 1</div>
+          <div class="card-title">王道プラン</div>
+          <div class="card-sub">鳥羽水族館 × 伊勢神宮 × 御在所ロープウェイ</div>
+          <div class="card-days">
+            <div class="card-day"><div class="day-dot" style="background:#c0392b"></div>Day 1　🐟 鳥羽水族館</div>
+            <div class="card-day"><div class="day-dot" style="background:#e67e22"></div>Day 2　⛩️ 伊勢神宮 ＋ おかげ横丁</div>
+            <div class="card-day"><div class="day-dot" style="background:#27ae60"></div>Day 3　🚡 御在所ロープウェイ</div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag tag-safety-mid">🌊 高台ホテル</span>
+            <span class="card-tag tag-kids">🐟 水族館あり</span>
+            <span class="card-tag tag-food">🦐 海鮮充実</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Mie P2 -->
+      <a class="plan-card" href="mie/itinerary-p2.html">
+        <div class="card-top mie2"></div>
+        <div class="card-body">
+          <div class="card-num">パターン 2</div>
+          <div class="card-title">子供最優先プラン</div>
+          <div class="card-sub">ナガシマリゾート全力2日間 × 伊勢神宮</div>
+          <div class="card-days">
+            <div class="card-day"><div class="day-dot" style="background:#1565c0"></div>Day 1　🎠 わくわくパーク ＋ プール</div>
+            <div class="card-day"><div class="day-dot" style="background:#6a1b9a"></div>Day 2　🎢 スパーランド day2 ＋ 温泉</div>
+            <div class="card-day"><div class="day-dot" style="background:#00695c"></div>Day 3　⛩️ 伊勢神宮</div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag tag-safety-lo">⚠️ 上層階確保必須</span>
+            <span class="card-tag tag-kids">🎠 子供★★★★★</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Mie P3 -->
+      <a class="plan-card" href="mie/itinerary-p3.html">
+        <div class="card-top mie3"></div>
+        <div class="card-body">
+          <div class="card-num">パターン 3</div>
+          <div class="card-title">内陸安全重視プラン</div>
+          <div class="card-sub">VISON（ヴィソン） × 伊勢神宮 × 鳥羽水族館</div>
+          <div class="card-days">
+            <div class="card-day"><div class="day-dot" style="background:#2e7d32"></div>Day 1　🌿 VISON 到着・自然探索</div>
+            <div class="card-day"><div class="day-dot" style="background:#1565c0"></div>Day 2　⛩️ 伊勢神宮 ＋ 🐟 鳥羽水族館</div>
+            <div class="card-day"><div class="day-dot" style="background:#6a1b9a"></div>Day 3　🚡 御在所 or VISON再訪</div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag tag-safety-hi">🛡️ 津波最安全</span>
+            <span class="card-tag tag-relax">🏕️ グランピング</span>
+            <span class="card-tag tag-food">🦐 海鮮あり</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ▼ 静岡県 -->
+  <div class="pref-section">
+    <div class="pref-header shizu">
+      <div class="pref-icon">🌺</div>
+      <div>
+        <div class="pref-title">静岡県（浜松）</div>
+        <div class="pref-sub">フラワーパーク・掛川花鳥園・浜名湖・桜えび</div>
+      </div>
+    </div>
+
+    <div class="plan-grid">
+
+      <!-- Shizuoka P1 -->
+      <a class="plan-card" href="shizuoka/itinerary-p1.html">
+        <div class="card-top siz1"></div>
+        <div class="card-body">
+          <div class="card-num">パターン 1</div>
+          <div class="card-title">自然満喫プラン</div>
+          <div class="card-sub">フラワーパーク × 動物園 × 掛川花鳥園</div>
+          <div class="card-days">
+            <div class="card-day"><div class="day-dot" style="background:#ad1457"></div>Day 1　🌷 フラワーパーク ＋ 🦁 動物園</div>
+            <div class="card-day"><div class="day-dot" style="background:#6a1b9a"></div>Day 2　🦜 掛川花鳥園 ＋ 🚢 遊覧船</div>
+            <div class="card-day"><div class="day-dot" style="background:#00838f"></div>Day 3　🌿 ガーデンパーク → 帰路</div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag tag-safety-mid">🌊 高台ホテル</span>
+            <span class="card-tag tag-nature">🌷 GW花の最盛期</span>
+            <span class="card-tag tag-kids">🦜 触れ合いあり</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Shizuoka P2 -->
+      <a class="plan-card" href="shizuoka/itinerary-p2.html">
+        <div class="card-top siz2"></div>
+        <div class="card-body">
+          <div class="card-num">パターン 2</div>
+          <div class="card-title">触れ合い特化プラン</div>
+          <div class="card-sub">掛川花鳥園 → フラワーパーク × 動物園</div>
+          <div class="card-days">
+            <div class="card-day"><div class="day-dot" style="background:#e65100"></div>Day 1　🦜 掛川花鳥園（完全屋内）</div>
+            <div class="card-day"><div class="day-dot" style="background:#2e7d32"></div>Day 2　🌷 フラワーパーク ＋ 🦁 動物園</div>
+            <div class="card-day"><div class="day-dot" style="background:#1565c0"></div>Day 3　🚢 遊覧船 ＋ 🦐 桜えび</div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag tag-kids">🦜 触れ合い★★★★★</span>
+            <span class="card-tag tag-safety-mid">☔ Day1雨天対応◎</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Shizuoka P3 -->
+      <a class="plan-card" href="shizuoka/itinerary-p3.html">
+        <div class="card-top siz3"></div>
+        <div class="card-body">
+          <div class="card-num">パターン 3</div>
+          <div class="card-title">ゆったり充電プラン</div>
+          <div class="card-sub">温泉リラックス × フラワーパーク × 花鳥園</div>
+          <div class="card-days">
+            <div class="card-day"><div class="day-dot" style="background:#00695c"></div>Day 1　🌿 ガーデンパーク ＋ ♨️ 温泉</div>
+            <div class="card-day"><div class="day-dot" style="background:#ad1457"></div>Day 2　🌷 フラワーパーク ＋ 🦁 動物園</div>
+            <div class="card-day"><div class="day-dot" style="background:#1565c0"></div>Day 3　🦜 花鳥園 or 🦐 桜えび</div>
+          </div>
+          <div class="card-tags">
+            <span class="card-tag tag-relax">♨️ 疲れない設計</span>
+            <span class="card-tag tag-kids">💤 昼寝毎日確保</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">GW2026 家族旅行プラン集 ― 大人2名 ＋ 子供1名（2歳半）</div>
+</body>
+</html>
