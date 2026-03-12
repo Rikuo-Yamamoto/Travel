@@ -126,6 +126,17 @@
       font-size: 10px; color: #999; font-weight: 400; margin-right: 2px;
     }
 
+    /* ── Candidates Link ── */
+    .cand-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 700; text-decoration: none;
+      border-radius: 20px; padding: 6px 16px; margin-bottom: 20px;
+      border: 1px solid; transition: opacity 0.15s;
+    }
+    .cand-link:hover { opacity: 0.75; }
+    .cand-link.mie   { color: var(--mie);   border-color: var(--mie);   background: #fff5f5; }
+    .cand-link.shizu { color: var(--shizu); border-color: var(--shizu); background: #fff0f6; }
+
     /* ── Footer ── */
     .footer {
       background: #1a1a2e; color: rgba(255,255,255,0.5);
@@ -160,6 +171,7 @@
         <div class="pref-sub">伊勢神宮・鳥羽・御在所ロープウェイ・浜松名物グルメ</div>
       </div>
     </div>
+    <a href="mie/candidates.html" class="cand-link mie">📋 宿泊・観光・食事の候補リストを見る →</a>
 
     <div class="plan-grid">
 
@@ -240,6 +252,7 @@
         <div class="pref-sub">フラワーパーク・掛川花鳥園・浜名湖・桜えび</div>
       </div>
     </div>
+    <a href="shizuoka/candidates.html" class="cand-link shizu">📋 宿泊・観光・食事の候補リストを見る →</a>
 
     <div class="plan-grid">
 

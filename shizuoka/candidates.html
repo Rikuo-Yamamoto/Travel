@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>静岡県（浜松）旅行候補リスト</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ad1457;
+      --accent:  #00695c;
+      --dark:    #2c2c2c;
+      --mid:     #666;
+      --border:  #e0ccd5;
+      --sand:    #fdf0f5;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f5eff2; color: var(--dark); line-height: 1.7; }
+
+    /* ── Cover ── */
+    .cover {
+      background: linear-gradient(150deg, #6a0032 0%, #ad1457 40%, #00695c 100%);
+      color: white; padding: 60px 40px 50px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cover::before { content: "🌺"; font-size: 220px; position: absolute; right: -20px; top: -20px; opacity: 0.07; line-height: 1; }
+    .cover-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 16px; font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+    .cover h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(26px,5vw,38px); font-weight: 700; letter-spacing: 3px; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .cover h2 { font-size: 15px; font-weight: 300; opacity: 0.85; letter-spacing: 2px; margin-bottom: 28px; }
+    .cover-chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .cover-chip { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 5px 16px; font-size: 12px; }
+
+    /* ── Sub Nav ── */
+    .subnav { background: white; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 10; }
+    .subnav-inner { max-width: 900px; margin: 0 auto; display: flex; overflow-x: auto; }
+    .subnav a { padding: 13px 22px; font-size: 13px; font-weight: 700; color: var(--mid); text-decoration: none; white-space: nowrap; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; margin-bottom: -3px; transition: color 0.15s; }
+    .subnav a:hover { color: var(--primary); }
+    .subnav .back { margin-left: auto; color: var(--primary); }
+
+    /* ── Container ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 20px; }
+
+    /* ── Section ── */
+    .section-block { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 2px solid var(--primary); }
+    .section-icon { font-size: 34px; }
+    .section-title { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+    .section-sub { font-size: 12px; color: var(--mid); margin-top: 3px; }
+
+    /* ── Candidate Card ── */
+    .cand-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 14px rgba(0,0,0,0.07); margin-bottom: 22px; border: 1px solid var(--border); }
+    .cand-accent { height: 6px; }
+    .cand-body { padding: 24px 28px; }
+
+    .cand-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+    .cand-name { font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 700; line-height: 1.3; }
+    .cand-loc { font-size: 12px; color: var(--mid); margin-top: 3px; }
+    .cand-badges { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+    .badge { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 3px 12px; border: 1px solid; white-space: nowrap; }
+    .badge-recommend { background: #fce4ec; color: #880e4f; border-color: #f48fb1; }
+    .badge-safe      { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+    .badge-info      { background: #e0f2f1; color: #004d40; border-color: #80cbc4; }
+    .badge-caution   { background: #fff3e0; color: #e65100; border-color: #ffb74d; }
+    .badge-star      { background: #fff8e1; color: #f57f17; border-color: #ffe082; }
+
+    /* ── Tsunami Banner ── */
+    .tsunami { border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: flex-start; gap: 12px; font-size: 13px; }
+    .tsunami-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .tsunami-label { font-weight: 700; font-size: 11px; letter-spacing: 1px; display: block; margin-bottom: 3px; }
+    .t-safe   { background: #e8f5e9; border: 1px solid #a5d6a7; color: #1b5e20; }
+    .t-ok     { background: #fff8e1; border: 1px solid #ffe082; color: #7d4e00; }
+    .t-warn   { background: #fff3e0; border: 1px solid #ffb74d; color: #bf360c; }
+
+    /* ── Rating Row ── */
+    .rating-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+    .r-item { background: var(--sand); border-radius: 8px; padding: 10px 12px; }
+    .r-label { font-size: 10px; color: var(--mid); margin-bottom: 4px; }
+    .r-val   { font-size: 12px; font-weight: 700; line-height: 1.4; }
+    .rv-good { color: #1b5e20; }
+    .rv-ok   { color: #1565c0; }
+    .rv-mid  { color: #e65100; }
+
+    /* ── Info Chips ── */
+    .info-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .chip { font-size: 11px; font-weight: 500; border-radius: 20px; padding: 4px 12px; }
+    .chip-default { background: #f0f0f0; color: var(--dark); }
+    .chip-good    { background: #e8f5e9; color: #2e7d32; }
+    .chip-warn    { background: #fff3e0; color: #e65100; }
+    .chip-info    { background: #e3f2fd; color: #1565c0; }
+    .chip-free    { background: #e8f5e9; color: #1b5e20; font-weight: 700; }
+
+    /* ── Merit / Demerit ── */
+    .md-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .md-box { border-radius: 10px; padding: 14px 16px; }
+    .md-merit   { background: #f0faf0; border: 1px solid #c8e6c9; }
+    .md-demerit { background: #fff8f0; border: 1px solid #ffccbc; }
+    .md-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+    .md-merit   .md-title { color: #2e7d32; }
+    .md-demerit .md-title { color: #bf360c; }
+    .md-list { list-style: none; }
+    .md-list li { font-size: 12px; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; line-height: 1.55; }
+    .md-merit   .md-list li::before { content: "✓"; color: #2e7d32; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .md-demerit .md-list li::before { content: "–"; color: #bf360c; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Footer ── */
+    .footer { background: #1a1a2e; color: rgba(255,255,255,0.5); text-align: center; padding: 24px; font-size: 12px; letter-spacing: 1px; }
+
+    @media (max-width: 620px) {
+      .cover { padding: 48px 20px 36px; }
+      .cand-body { padding: 18px 18px; }
+      .rating-row { grid-template-columns: 1fr 1fr; }
+      .md-grid { grid-template-columns: 1fr; }
+      .cand-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ▼ Cover -->
+<div class="cover">
+  <div class="cover-badge">静岡県（浜松）旅行候補リスト</div>
+  <h1>候補スポット一覧</h1>
+  <h2>宿泊 ・ 観光 ・ 食事</h2>
+  <div class="cover-chips">
+    <div class="cover-chip">👨‍👩‍👧 大人2名 ＋ 子供1名（2歳半）</div>
+    <div class="cover-chip">🗓 GW2026</div>
+    <div class="cover-chip">🚗 マイカー移動</div>
+  </div>
+</div>
+
+<!-- ▼ Sub Nav -->
+<div class="subnav">
+  <div class="subnav-inner">
+    <a href="#hotels">🏨 宿泊候補</a>
+    <a href="#spots">🎡 観光・遊び場</a>
+    <a href="#food">🍣 食事候補</a>
+    <a href="../index.html" class="back">← プラン一覧へ戻る</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════ 宿泊候補 ════════════════════ -->
+  <div class="section-block" id="hotels">
+    <div class="section-header">
+      <div class="section-icon">🏨</div>
+      <div>
+        <div class="section-title">宿泊候補</div>
+        <div class="section-sub">津波リスク・子供施設・寝具環境を総合評価（4施設）</div>
+      </div>
+    </div>
+
+    <!-- 浜名湖ロイヤルホテル -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#ad1457,#00695c);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">浜名湖ロイヤルホテル</div>
+            <div class="cand-loc">📍 浜松市・舘山寺温泉｜浜名湖ビューのリゾートホテル</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ プラン採用ホテル</span>
+          </div>
+        </div>
+        <div class="tsunami t-ok">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◯ 相対的に安全</span>
+            浜名湖（汽水湖）が緩衝。舘山寺エリアの高台部分（標高10〜20m）はリスク低。<strong>具体的な棟の標高・浸水深は事前確認推奨。</strong>
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-mid">△ 洋室ベッド中心。和室プランで布団対応可</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-ok">◯ あり（要予約時確認）</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-ok">◯ キッズルーム・プールあり</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>浜名湖の景観が美しく大人の満足度が高い</li>
+              <li>フラワーパーク・動物園へ車で10〜15分</li>
+              <li>温泉でリフレッシュ可能</li>
+              <li>浜名湖が緩衝となり津波リスクが低め</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>人気ホテルのためGW予約がすぐ埋まる（早期予約必須）</li>
+              <li>海鮮は外食か近隣で別途手配が必要</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ホテルクラウンパレス浜松 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#1565c0,#0277bd);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">ホテルクラウンパレス浜松</div>
+            <div class="cand-loc">📍 浜松市中心部（駅近）｜海岸から約5〜6km</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🏙️ 市街地立地</span>
+          </div>
+        </div>
+        <div class="tsunami t-ok">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◯ 市街地緩衝あり（要確認）</span>
+            海岸から約5〜6km。市街地が緩衝となる（標高 約5〜10m）。建物5F以上は10m超。<strong>ただし市街地の浸水想定区域に含まれる可能性があるためハザードマップ確認推奨。</strong>
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-mid">△ 洋室ベッド中心。ファミリールームは大型ベッドあり</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-ok">◯ あり</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-ok">◯ キッズコーナーあり</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>浜松市中心部のため食事・買い物に便利</li>
+              <li>浜名湖・フラワーパーク・動物園へのアクセス良好</li>
+              <li>ホテル設備のレベルが高い</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>海岸線から5kmでも浜松の津波浸水想定区域に含まれる可能性あり</li>
+              <li>周辺の自然体験は少ない</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KKR浜名湖 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#00695c,#00897b);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">KKR浜名湖</div>
+            <div class="cand-loc">📍 浜松市・舘山寺｜国家公務員宿泊施設（一般利用可）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">💴 リーズナブル</span>
+            <span class="badge badge-info">🌊 高台立地</span>
+          </div>
+        </div>
+        <div class="tsunami t-ok">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◯ 高台立地で安全</span>
+            舘山寺の丘の上（標高10〜20m）に位置。浜名湖に面した中規模施設。一般客も利用可能で比較的リーズナブル。
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-good">◎ 和室プラン（布団）あり</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-mid">△ 基本的なアメニティのみ</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-mid">△ 限定的</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>和室布団対応で2歳児の就寝環境に最適</li>
+              <li>比較的リーズナブルで宿泊費を抑えられる</li>
+              <li>高台で津波リスク低め</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>子供向け施設・アメニティが限定的</li>
+              <li>GW期間は混雑・予約困難な場合あり</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 掛川グランドホテル -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#e65100,#f57f17);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">掛川グランドホテル</div>
+            <div class="cand-loc">📍 掛川市｜掛川花鳥園・掛川城への観光基点</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-caution">🦜 花鳥園まで車5分</span>
+          </div>
+        </div>
+        <div class="tsunami t-ok">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◯〜△ 比較的内陸（要確認）</span>
+            海岸から約5〜7km内陸に立地。相対的に津波リスクは低め。<strong>大規模津波では市街地への浸水も想定されるためハザードマップ確認を推奨。</strong>
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-mid">△ 洋室中心。和室プランで布団対応可</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-ok">◯ あり（要確認）</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-mid">△ ホテル内は限定的</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>掛川花鳥園（子供向け最高評価スポット）まで車5分</li>
+              <li>比較的内陸で津波リスクが相対的に低い</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>子供向けホテル施設は少なめ</li>
+              <li>浜松中心部より食事の選択肢が減る</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section hotels -->
+
+  <!-- ════════════════════ 観光・遊び場候補 ════════════════════ -->
+  <div class="section-block" id="spots">
+    <div class="section-header">
+      <div class="section-icon">🎡</div>
+      <div>
+        <div class="section-title">子供向け観光・遊び場候補</div>
+        <div class="section-sub">2歳半でも楽しめるスポットを厳選評価（6スポット）</div>
+      </div>
+    </div>
+
+    <!-- はままつフラワーパーク -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#ad1457,#e91e63);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">はままつフラワーパーク</div>
+            <div class="cand-loc">📍 浜松市｜GW期間が年間最高の見頃</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ 最推奨スポット</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 2〜3時間</span>
+          <span class="chip chip-warn">⚠️ GW混雑 必至（開園直後推奨）</span>
+          <span class="chip chip-good">🌷 チューリップ・フジ・バラが一斉満開</span>
+          <span class="chip chip-good">🦁 動物園と共通券でお得</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>GW期間が花の見頃ピーク（年間で最も美しい時期）</li>
+              <li>広くてベビーカーで回りやすい設計</li>
+              <li>隣接の浜松市動物園と共通券でお得に両方楽しめる</li>
+              <li>広い芝生で子供が思い切り走り回れる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW中は駐車場が満車になることがある（早朝到着推奨）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 浜松市動物園 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#2e7d32,#558b2f);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">浜松市動物園</div>
+            <div class="cand-loc">📍 浜松市｜フラワーパーク隣接</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🦁 2歳児に最適</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 1〜2時間</span>
+          <span class="chip chip-good">◯ フラワーパークほどの混雑ではない</span>
+          <span class="chip chip-good">🦁 共通券でフラワーパークとセット訪問可</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>ライオン・キリン・サル・ペンギン等を見て2歳児が大喜び</li>
+              <li>フラワーパークと同日に訪問可能（隣接）</li>
+              <li>共通券でコスパ良好</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>特になし</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 掛川花鳥園 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#e65100,#ff8f00);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">掛川花鳥園</div>
+            <div class="cand-loc">📍 掛川市｜花と鳥が共存する日本唯一のテーマパーク</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ 子供向け最高評価</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 2〜3時間</span>
+          <span class="chip chip-good">🏠 完全屋内・雨天でも全力で楽しめる</span>
+          <span class="chip chip-good">🦜 ペンギン・フクロウに手から餌やり体験</span>
+          <span class="chip chip-default">△ フラワーパークより空いている</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>ペンギン・フクロウ・インコに手から直接餌やり体験ができる</li>
+              <li>2歳半の子供が実際に鳥と触れ合える感動体験（一生の記憶に）</li>
+              <li>完全温室屋内のため雨天でも全く問題なし</li>
+              <li>大人も非日常体験で十分楽しめる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>浜松市街からは車で約30〜40分かかる</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 浜名湖ガーデンパーク -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#00695c,#00897b);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">浜名湖ガーデンパーク</div>
+            <div class="cand-loc">📍 浜松市｜2004年浜名湖花博跡地・大型無料公園</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🆓 入場無料</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 1〜2時間</span>
+          <span class="chip chip-free">🆓 入場無料</span>
+          <span class="chip chip-good">◯ 広大で混雑が分散しやすい</span>
+          <span class="chip chip-good">🌷 GW中は花々が美しい</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>無料で広大な空間を楽しめる（コスパ最強）</li>
+              <li>子供が自由に走り回れる広大な芝生</li>
+              <li>浜名湖の景色が美しい</li>
+              <li>遊具広場・噴水エリアあり</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>屋内施設が少なく雨天時は楽しみにくい</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 舘山寺ロープウェイ -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#ad1457,#1565c0);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">舘山寺ロープウェイ</div>
+            <div class="cand-loc">📍 浜松市・浜名湖｜浜名湖上空を渡る乗り物体験</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🚡 乗り物好き2歳児に◎</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 30〜60分</span>
+          <span class="chip chip-good">🚡 浜名湖上空を渡る非日常体験</span>
+          <span class="chip chip-default">△ ある程度混雑するが回転は速い</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>短時間で楽しめるため他の観光とセットにしやすい</li>
+              <li>乗り物好きな2歳児が大喜び</li>
+              <li>山頂から浜名湖を一望できる絶景</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>特になし</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 浜名湖遊覧船 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#1565c0,#0277bd);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">浜名湖遊覧船</div>
+            <div class="cand-loc">📍 舘山寺〜弁天島｜浜名湖をクルーズ</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🚢 船旅体験</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 30〜40分</span>
+          <span class="chip chip-good">🚢 船に乗る体験が2歳に楽しい</span>
+          <span class="chip chip-warn">⚠️ 天候・波の状況により運休の場合あり</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>船に乗る体験が2歳児に楽しく記憶に残る</li>
+              <li>ロープウェイとセットにして同日に楽しめる</li>
+              <li>浜名湖・うなぎ漁業の文化も垣間見える</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>天候や波の状況により運休の場合あり（事前確認推奨）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section spots -->
+
+  <!-- ════════════════════ 食事候補 ════════════════════ -->
+  <div class="section-block" id="food">
+    <div class="section-header">
+      <div class="section-icon">🍣</div>
+      <div>
+        <div class="section-title">食事候補</div>
+        <div class="section-sub">浜松・静岡のご当地グルメを厳選（5カテゴリ）</div>
+      </div>
+    </div>
+
+    <!-- 浜名湖うなぎ -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#ad1457,#e91e63);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">浜名湖うなぎ</div>
+            <div class="cand-loc">📍 浜松市・舘山寺エリア｜日本一のうなぎ産地</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ 浜松の代表格</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">🐟 蒲焼・白焼き・うなぎ丼</span>
+          <span class="chip chip-good">子供も食べやすい</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>浜松に来たら外せない名物。日本一のうなぎ産地</li>
+              <li>細かく刻めば2歳児も食べやすい</li>
+              <li>舘山寺エリアで宿泊ホテルから近い</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>海鮮ではなく淡水魚のため「海鮮メイン」の方針とは若干ズレる</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 桜えび・しらす丼 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#e65100,#ff8f00);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">桜えび・しらす丼</div>
+            <div class="cand-loc">📍 由比〜清水エリア｜浜松から車で約1時間</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">🦐 GWが旬のタイミング</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">🦐 4〜6月が旬（GWと重なる）</span>
+          <span class="chip chip-warn">⚠️ 生しらすは漁が休みの日あり（要事前確認）</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>GWが旬のタイミングと重なる旬の海鮮体験</li>
+              <li>桜えびかき揚げ丼・しらす丼は子供も食べやすい</li>
+              <li>帰路途中に立ち寄れる（浜松→名古屋西ルート上）</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>浜松からは距離があるため別途ドライブが必要（約1時間）</li>
+              <li>天候により漁が休みのこともある（生しらす）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 浜名湖産カキ・アサリ -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#1565c0,#0277bd);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">浜名湖産カキ・アサリ</div>
+            <div class="cand-loc">📍 浜松市｜浜名湖の海鮮をエリア内で完結</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🦪 浜名湖の名産</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-warn">⚠️ GW（5月）はカキシーズン終盤</span>
+          <span class="chip chip-good">子供はアサリ味噌汁で対応可</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>浜名湖エリアで完結できる海鮮グルメ</li>
+              <li>子供はアサリの味噌汁など食べやすいメニューで対応可能</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW（5月）はカキシーズン終盤のため、品質・提供状況は要確認</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 浜松餃子 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#00695c,#00897b);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">浜松餃子</div>
+            <div class="cand-loc">📍 浜松市内各所｜代表的B級グルメ</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🥟 子供も大好き</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">野菜多め・あっさり目の味付け</span>
+          <span class="chip chip-good">💴 リーズナブルで気軽</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>野菜多めのあっさり味で2歳児も食べやすい</li>
+              <li>リーズナブルで気軽に食べられる夕食の選択肢として便利</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>海鮮ではない</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 舘山寺周辺 海鮮食堂 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#ad1457,#00695c);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">舘山寺周辺 海鮮食堂</div>
+            <div class="cand-loc">📍 浜松市・舘山寺温泉エリア｜浜名湖の新鮮な魚介</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🏨 ホテル近隣で完結</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">海老天丼・ほうじ茶海老・地元食材</span>
+          <span class="chip chip-warn">⚠️ GW中は満席・予約困難な場合あり</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>宿泊エリアと同一地域のため移動不要</li>
+              <li>浜名湖産の新鮮な魚介を楽しめる</li>
+              <li>ブランドほうじ茶海老・海老天丼など地元食材が豊富</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW中は満席・予約困難になる場合あり（早めの予約推奨）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section food -->
+
+</div><!-- /container -->
+
+<div class="footer">GW2026 静岡県（浜松）旅行候補リスト ― 大人2名 ＋ 子供1名（2歳半）</div>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三重県 旅行候補リスト</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #c0392b;
+      --accent:  #e67e22;
+      --dark:    #2c2c2c;
+      --mid:     #666;
+      --border:  #e8ddd5;
+      --sand:    #fdf6ec;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #f0ebe5; color: var(--dark); line-height: 1.7; }
+
+    /* ── Cover ── */
+    .cover {
+      background: linear-gradient(150deg, #8b0000 0%, #c0392b 40%, #e67e22 100%);
+      color: white; padding: 60px 40px 50px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cover::before { content: "⛩"; font-size: 220px; position: absolute; right: -20px; top: -20px; opacity: 0.07; line-height: 1; }
+    .cover-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 16px; font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+    .cover h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(26px,5vw,38px); font-weight: 700; letter-spacing: 3px; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .cover h2 { font-size: 15px; font-weight: 300; opacity: 0.85; letter-spacing: 2px; margin-bottom: 28px; }
+    .cover-chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .cover-chip { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 5px 16px; font-size: 12px; }
+
+    /* ── Sub Nav ── */
+    .subnav { background: white; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 10; }
+    .subnav-inner { max-width: 900px; margin: 0 auto; display: flex; overflow-x: auto; }
+    .subnav a { padding: 13px 22px; font-size: 13px; font-weight: 700; color: var(--mid); text-decoration: none; white-space: nowrap; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; margin-bottom: -3px; transition: color 0.15s; }
+    .subnav a:hover { color: var(--primary); }
+    .subnav .back { margin-left: auto; color: var(--primary); }
+
+    /* ── Container ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 20px; }
+
+    /* ── Section ── */
+    .section-block { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 2px solid var(--primary); }
+    .section-icon { font-size: 34px; }
+    .section-title { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+    .section-sub { font-size: 12px; color: var(--mid); margin-top: 3px; }
+
+    /* ── Candidate Card ── */
+    .cand-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 14px rgba(0,0,0,0.07); margin-bottom: 22px; border: 1px solid var(--border); }
+    .cand-accent { height: 6px; }
+    .cand-body { padding: 24px 28px; }
+
+    .cand-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+    .cand-name { font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 700; line-height: 1.3; }
+    .cand-loc { font-size: 12px; color: var(--mid); margin-top: 3px; }
+    .cand-badges { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+    .badge { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 3px 12px; border: 1px solid; white-space: nowrap; }
+    .badge-recommend { background: #fff8e1; color: #f57f17; border-color: #ffe082; }
+    .badge-safe      { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+    .badge-info      { background: #e0f2f1; color: #004d40; border-color: #80cbc4; }
+    .badge-caution   { background: #fff3e0; color: #e65100; border-color: #ffb74d; }
+
+    /* ── Tsunami Banner ── */
+    .tsunami { border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: flex-start; gap: 12px; font-size: 13px; }
+    .tsunami-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .tsunami-label { font-weight: 700; font-size: 11px; letter-spacing: 1px; display: block; margin-bottom: 3px; }
+    .t-safe   { background: #e8f5e9; border: 1px solid #a5d6a7; color: #1b5e20; }
+    .t-ok     { background: #fff8e1; border: 1px solid #ffe082; color: #7d4e00; }
+    .t-warn   { background: #fff3e0; border: 1px solid #ffb74d; color: #bf360c; }
+    .t-danger { background: #fce4ec; border: 1px solid #f48fb1; color: #880e4f; }
+
+    /* ── Rating Row ── */
+    .rating-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+    .r-item { background: var(--sand); border-radius: 8px; padding: 10px 12px; }
+    .r-label { font-size: 10px; color: var(--mid); margin-bottom: 4px; letter-spacing: 0.5px; }
+    .r-val   { font-size: 12px; font-weight: 700; line-height: 1.4; }
+    .rv-good { color: #1b5e20; }
+    .rv-ok   { color: #1565c0; }
+    .rv-mid  { color: #e65100; }
+    .rv-warn { color: #b71c1c; }
+
+    /* ── Info Chips ── */
+    .info-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .chip { font-size: 11px; font-weight: 500; border-radius: 20px; padding: 4px 12px; }
+    .chip-default { background: #f0f0f0; color: var(--dark); }
+    .chip-good    { background: #e8f5e9; color: #2e7d32; }
+    .chip-warn    { background: #fff3e0; color: #e65100; }
+    .chip-info    { background: #e3f2fd; color: #1565c0; }
+
+    /* ── Merit / Demerit ── */
+    .md-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .md-box { border-radius: 10px; padding: 14px 16px; }
+    .md-merit   { background: #f0faf0; border: 1px solid #c8e6c9; }
+    .md-demerit { background: #fff8f0; border: 1px solid #ffccbc; }
+    .md-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+    .md-merit   .md-title { color: #2e7d32; }
+    .md-demerit .md-title { color: #bf360c; }
+    .md-list { list-style: none; }
+    .md-list li { font-size: 12px; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; line-height: 1.55; }
+    .md-merit   .md-list li::before { content: "✓"; color: #2e7d32; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .md-demerit .md-list li::before { content: "–"; color: #bf360c; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Divider ── */
+    .sec-divider { font-family: 'Noto Serif JP', serif; font-size: 12px; letter-spacing: 3px; color: var(--mid); display: flex; align-items: center; gap: 12px; margin: 32px 0 20px; }
+    .sec-divider::before, .sec-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Footer ── */
+    .footer { background: #1a1a2e; color: rgba(255,255,255,0.5); text-align: center; padding: 24px; font-size: 12px; letter-spacing: 1px; }
+
+    @media (max-width: 620px) {
+      .cover { padding: 48px 20px 36px; }
+      .cand-body { padding: 18px 18px; }
+      .rating-row { grid-template-columns: 1fr 1fr; }
+      .md-grid { grid-template-columns: 1fr; }
+      .cand-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ▼ Cover -->
+<div class="cover">
+  <div class="cover-badge">三重県 旅行候補リスト</div>
+  <h1>候補スポット一覧</h1>
+  <h2>宿泊 ・ 観光 ・ 食事</h2>
+  <div class="cover-chips">
+    <div class="cover-chip">👨‍👩‍👧 大人2名 ＋ 子供1名（2歳半）</div>
+    <div class="cover-chip">🗓 GW2026</div>
+    <div class="cover-chip">🚗 マイカー移動</div>
+  </div>
+</div>
+
+<!-- ▼ Sub Nav -->
+<div class="subnav">
+  <div class="subnav-inner">
+    <a href="#hotels">🏨 宿泊候補</a>
+    <a href="#spots">🎡 観光・遊び場</a>
+    <a href="#food">🍣 食事候補</a>
+    <a href="../index.html" class="back">← プラン一覧へ戻る</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════ 宿泊候補 ════════════════════ -->
+  <div class="section-block" id="hotels">
+    <div class="section-header">
+      <div class="section-icon">🏨</div>
+      <div>
+        <div class="section-title">宿泊候補</div>
+        <div class="section-sub">津波リスク・子供施設・寝具環境を総合評価（4施設）</div>
+      </div>
+    </div>
+
+    <!-- ナガシマリゾート -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#1565c0,#ff6f00);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">ナガシマリゾート</div>
+            <div class="cand-loc">📍 桑名市長島町｜ホテルナガシマ・ザ ホテルワイルドナイツ 等</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">🎠 子供向け ◎</span>
+          </div>
+        </div>
+        <div class="tsunami t-warn">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ⚠️ 要注意</span>
+            伊勢湾岸の低地（標高 約2〜5m）。南海トラフ発生時は湾奥部のため直撃波高は低減されるが10m想定に対しては安全とは言えない。<strong>上層階（4F以上）への避難計画確認が必須。</strong>
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-mid">△ 洋室ベッド中心。ファミリールーム要確認</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-ok">◯ あり（ホテルによる）</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-good">◎ キッズプール・遊び場多数</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>子供が飽きない（スパーランド・キッズゾーン・温泉と選択肢豊富）</li>
+              <li>食事施設が多く、子供メニューも豊富</li>
+              <li>海鮮・バイキング等のレストランが揃う</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW中は激混み（スパーランドの待ち時間が長くなる）</li>
+              <li>標高が低く津波リスクへの懸念あり（上層階確保を推奨）</li>
+              <li>料金がやや高め（GW特別料金）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISON -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#2e7d32,#558b2f);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">ヴィソン（VISON）</div>
+            <div class="cand-loc">📍 多気町｜グランピング棟 ／ ホテル棟</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🛡️ 津波リスク 最安全</span>
+          </div>
+        </div>
+        <div class="tsunami t-safe">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◎ 3候補中 最高評価</span>
+            内陸山間部（標高 約100〜200m）。<strong>南海トラフ津波の被害想定域の完全圏外。</strong>2021年開業の大型複合リゾート。伊勢自動車道「多気ヴィソンSIC」直結。
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-good">◎ グランピング棟はコット・マット形式</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-ok">◯ あり（要予約確認）</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-ok">◯ 屋外自然アクティビティ中心</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>内陸部で津波リスクが極めて低い（3候補中 最安全）</li>
+              <li>グランピングコットは低床で子供が布団感覚で眠れる</li>
+              <li>温泉・サウナ・農場体験あり。大人も充実</li>
+              <li>敷地内にマルシェ・海鮮含む多様なレストランが集結</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>ホテル棟の子供向け室内遊び施設はやや少なめ</li>
+              <li>周辺の子供向けアトラクションへは車移動が必要</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 伊勢志摩エバーグレイズ -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#00838f,#00695c);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">伊勢志摩エバーグレイズ</div>
+            <div class="cand-loc">📍 志摩市｜グランピングリゾート</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🏕️ グランピング</span>
+          </div>
+        </div>
+        <div class="tsunami t-warn">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ⚠️ 要注意</span>
+            英虞湾沿いの半島低地（標高 約5〜10m）。南海トラフ直撃の可能性があるエリア。<strong>ハザードマップ確認必須。</strong>
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-good">◎ コット・マット形式で低床就寝</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-ok">◯ 対応あり</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-ok">◯ 自然探索・キャンプファイヤー</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>寝具の低さがお布団就寝に近く子供の睡眠環境に向いている</li>
+              <li>非日常感が高く大人の満足度も高い</li>
+              <li>星空・自然体験が充実</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>テント構造のため雨天・悪天候時のリスクあり（GWは天候不安定なことも）</li>
+              <li>志摩半島沿岸部は津波想定エリアに含まれやすい</li>
+              <li>海鮮食事は施設外への外出が必要</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 鳥羽国際ホテル -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#c0392b,#e67e22);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">鳥羽国際ホテル</div>
+            <div class="cand-loc">📍 鳥羽市｜老舗リゾートホテル・高台立地</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-caution">🌊 高台立地（要確認）</span>
+          </div>
+        </div>
+        <div class="tsunami t-ok">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◯ 相対的に安全</span>
+            高台立地（標高 約20〜30m 推定）。<strong>正確な標高・避難計画は施設への事前問い合わせ推奨。</strong>周辺道路や低地部分は別途確認が必要。
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-mid">△ 洋室中心。和室プランで布団対応可</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-good">◎ おむつ台・子供食器・絵本等 充実</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-ok">◯ キッズルーム・プール（夏季）</div></div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>高台立地により相対的に津波リスクが低め</li>
+              <li>和室プランで布団就寝が可能（2歳児に◎）</li>
+              <li>鳥羽水族館・伊勢神宮へのアクセスが良好</li>
+              <li>施設内バイキングで海鮮（伊勢海老・あわび）が楽しめる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW料金が高め</li>
+              <li>高台のため車アクセスにやや急坂あり</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section hotels -->
+
+  <!-- ════════════════════ 観光・遊び場候補 ════════════════════ -->
+  <div class="section-block" id="spots">
+    <div class="section-header">
+      <div class="section-icon">🎡</div>
+      <div>
+        <div class="section-title">子供向け観光・遊び場候補</div>
+        <div class="section-sub">2歳半でも楽しめるスポットを厳選評価（5スポット）</div>
+      </div>
+    </div>
+
+    <!-- 鳥羽水族館 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#0277bd,#00838f);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">鳥羽水族館</div>
+            <div class="cand-loc">📍 鳥羽市｜日本最大級・ジュゴン唯一の飼育</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ 王道スポット</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 2〜3時間</span>
+          <span class="chip chip-warn">⚠️ GW混雑 非常に激しい</span>
+          <span class="chip chip-good">🏠 雨天OK（屋内）</span>
+          <span class="chip chip-good">🐟 子供向け ◎</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>日本唯一のジュゴン飼育。ラッコ・イルカ・アシカショーで2歳児が大興奮</li>
+              <li>視覚的に楽しいため2歳でも十分楽しめる</li>
+              <li>雨天でも楽しめる完全屋内施設</li>
+              <li>伊勢神宮と同日に組み合わせやすい好立地</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW中の混雑が激しく、入場まで待ち時間が長くなることがある</li>
+              <li><strong>事前オンラインチケット購入が必須</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ナガシマスパーランド -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#1565c0,#7b1fa2);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">ナガシマスパーランド キッズゾーン</div>
+            <div class="cand-loc">📍 桑名市｜わくわくパーク（幼児専用エリア）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">🎠 幼児専用ゾーンあり</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 半日〜1日</span>
+          <span class="chip chip-warn">⚠️ GW混雑 日本最大級</span>
+          <span class="chip chip-good">🎠 子供向け ◎</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>わくわくパーク（幼児専用ゾーン）が充実</li>
+              <li>子供から大人まで全員が楽しめる</li>
+              <li>ホテルと隣接のため移動不要</li>
+              <li>雨天時のカバーエリアあり</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW中は人気アトラクションで1〜2時間待ちも発生</li>
+              <li>子供のペースに合わせると大人のライドに乗れないことも</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 伊勢神宮 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#8b0000,#c0392b);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">伊勢神宮（内宮）＋ おかげ横丁</div>
+            <div class="cand-loc">📍 伊勢市｜参拝＋食べ歩きを同時に</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⛩️ 必訪スポット</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 2〜3時間</span>
+          <span class="chip chip-warn">⚠️ GW混雑 非常に激しい（早朝推奨）</span>
+          <span class="chip chip-info">🍡 伊勢うどん・赤福・海老フライ</span>
+          <span class="chip chip-default">🛒 ベビーカー可（一部石畳あり）</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>文化・歴史体験と食べ歩きを同時に楽しめる</li>
+              <li>おかげ横丁の雰囲気が良く大人も大満足</li>
+              <li>てこね寿司・伊勢うどん・赤福など子供も食べやすいグルメが豊富</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW最盛期の混雑は相当なもの（駐車場待ちも発生）</li>
+              <li>朝8〜9時台の早朝参拝が必須</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 夫婦岩 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#0277bd,#1565c0);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">夫婦岩（二見興玉神社）</div>
+            <div class="cand-loc">📍 伊勢市二見町｜伊勢参拝前後に立ち寄れる名勝</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🐸 カエル像が子供に人気</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 15〜30分</span>
+          <span class="chip chip-good">◯ 比較的空いている</span>
+          <span class="chip chip-good">🐸 子供向け ◯</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>短時間で観光できるため時間調整に便利</li>
+              <li>伊勢参拝とセット訪問しやすい（車で10分）</li>
+              <li>カエルの置物が子供の目線で楽しい</li>
+              <li>朝の海が静かで美しく大人も満足</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>特になし</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 御在所ロープウェイ -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#2e7d32,#1565c0);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">御在所ロープウェイ</div>
+            <div class="cand-loc">📍 菰野町（内陸部）｜標高1,212m・山頂の絶景</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🛡️ 津波リスクゼロ</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-default">⏱ 滞在 2〜3時間</span>
+          <span class="chip chip-good">🚡 乗り物体験（2歳児◎）</span>
+          <span class="chip chip-default">△ 季節によって混雑</span>
+          <span class="chip chip-warn">⚠️ 強風時は運休の場合あり</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>内陸高地のため津波リスクがゼロ</li>
+              <li>ロープウェイ乗車自体が2歳児に大喜びの体験</li>
+              <li>山頂1,212mからの絶景は大人が感動</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>鳥羽・伊勢からは1時間以上かかるため動線の工夫が必要</li>
+              <li>強風・荒天時は運休。公式サイトで事前確認が必要</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section spots -->
+
+  <!-- ════════════════════ 食事候補 ════════════════════ -->
+  <div class="section-block" id="food">
+    <div class="section-header">
+      <div class="section-icon">🍣</div>
+      <div>
+        <div class="section-title">食事候補</div>
+        <div class="section-sub">三重の旬の海鮮グルメを中心に厳選（4カテゴリ）</div>
+      </div>
+    </div>
+
+    <!-- 伊勢海老 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#c0392b,#e67e22);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">伊勢海老料理</div>
+            <div class="cand-loc">📍 鳥羽・志摩エリア各所｜漁港近くの海鮮食堂・道の駅 伊勢志摩</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ 三重の代表格</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">🦐 GW旬まっさかり</span>
+          <span class="chip chip-warn">⚠️ 要予約（飛び込み不可）</span>
+          <span class="chip chip-info">塩焼き・刺身・みそ汁定食</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>三重ならではの旬の海鮮体験。GWがまさに旬</li>
+              <li>伊勢海老みそ汁の絶品さは格別</li>
+              <li>2歳児は出汁スープ・茶碗蒸し等で対応可能な店が多い</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW期間中は予約が必須。当日飛び込みは待ち時間大</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 牡蠣小屋 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#0277bd,#00838f);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">牡蠣小屋</div>
+            <div class="cand-loc">📍 浦村・鳥羽市｜日本有数の牡蠣産地</div>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-warn">⚠️ GW後半（5月）はシーズン終盤</span>
+          <span class="chip chip-info">焼き牡蠣・豪快な海鮮体験</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>大人が心ゆくまで牡蠣を楽しめる</li>
+              <li>豪快な海鮮体験が思い出に残る</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW後半（5月）は牡蠣シーズン終盤のため品質・提供状況に注意</li>
+              <li>子供が食べられるメニューが限られる場合あり</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- おかげ横丁食べ歩き -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#8b0000,#c0392b);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">おかげ横丁・おはらい町 食べ歩き</div>
+            <div class="cand-loc">📍 伊勢市｜伊勢参拝後の食べ歩きスポット</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">🍡 子供も食べやすい</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">赤福・伊勢うどん・てこね寿司</span>
+          <span class="chip chip-good">海老フライ・みたらし団子</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>食べ歩きスタイルで子供のペースに合わせやすい</li>
+              <li>海鮮・うどん・スイーツなど多様な食事選択肢</li>
+              <li>赤福のできたてを子供も食べられる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW中は歩行者で混み合い、ベビーカーの移動が大変な場合あり</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISONレストラン -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#2e7d32,#558b2f);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">ヴィソン内レストラン</div>
+            <div class="cand-loc">📍 多気町｜10店舗以上が集結する複合リゾートのレストラン</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🌿 VISON宿泊者向け</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-warn">⚠️ 要事前予約（GW当日満席）</span>
+          <span class="chip chip-info">海鮮・フレンチ・和食から選択可</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>宿泊施設と一体のため移動不要</li>
+              <li>子供が食事できるメニューの選択肢が広い</li>
+              <li>三重の食材を使った本格料理が揃う</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>飛び込みだとGW中は満席の可能性が高い。GW1〜2ヶ月前の予約が必須</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /section food -->
+
+</div><!-- /container -->
+
+<div class="footer">GW2026 三重県 旅行候補リスト ― 大人2名 ＋ 子供1名（2歳半）</div>
+</body>
+</html>
