@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>静岡県（富士宮）旅行候補リスト</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1565c0;
+      --accent:  #e65100;
+      --fuji:    #0277bd;
+      --dark:    #2c2c2c;
+      --mid:     #666;
+      --border:  #c5d8f0;
+      --sand:    #f0f5fb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #eef3f9; color: var(--dark); line-height: 1.7; }
+
+    /* ── Cover ── */
+    .cover {
+      background: linear-gradient(150deg, #0d2744 0%, #1565c0 45%, #e65100 100%);
+      color: white; padding: 60px 40px 50px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cover::before { content: "🗻"; font-size: 220px; position: absolute; right: -20px; top: -20px; opacity: 0.07; line-height: 1; }
+    .cover-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 4px 16px; font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+    .cover h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(26px,5vw,38px); font-weight: 700; letter-spacing: 3px; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .cover h2 { font-size: 15px; font-weight: 300; opacity: 0.85; letter-spacing: 2px; margin-bottom: 28px; }
+    .cover-chips { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .cover-chip { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 5px 16px; font-size: 12px; }
+
+    /* ── Sub Nav ── */
+    .subnav { background: white; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 10; }
+    .subnav-inner { max-width: 960px; margin: 0 auto; display: flex; overflow-x: auto; }
+    .subnav a { padding: 13px 22px; font-size: 13px; font-weight: 700; color: var(--mid); text-decoration: none; white-space: nowrap; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; margin-bottom: -3px; transition: color 0.15s; }
+    .subnav a:hover { color: var(--primary); }
+    .subnav .back { margin-left: auto; color: var(--primary); }
+
+    /* ── Container ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 44px 20px; }
+
+    /* ── Section ── */
+    .section-block { margin-bottom: 64px; }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 2px solid var(--primary); }
+    .section-icon { font-size: 34px; }
+    .section-title { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; }
+    .section-sub { font-size: 12px; color: var(--mid); margin-top: 3px; }
+
+    /* ── Area Tab ── */
+    .area-tab { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1px; background: var(--primary); color: white; border-radius: 4px; padding: 3px 10px; margin-bottom: 14px; }
+
+    /* ── Candidate Card ── */
+    .cand-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 14px rgba(0,0,0,0.07); margin-bottom: 22px; border: 1px solid var(--border); }
+    .cand-accent { height: 6px; }
+    .cand-body { padding: 24px 28px; }
+
+    .cand-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+    .cand-name { font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 700; line-height: 1.3; }
+    .cand-loc { font-size: 12px; color: var(--mid); margin-top: 3px; }
+    .cand-badges { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+    .badge { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 3px 12px; border: 1px solid; white-space: nowrap; }
+    .badge-recommend { background: #e3f2fd; color: #0d47a1; border-color: #90caf9; }
+    .badge-recommend2 { background: #fce4ec; color: #880e4f; border-color: #f48fb1; }
+    .badge-safe      { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+    .badge-info      { background: #e0f2f1; color: #004d40; border-color: #80cbc4; }
+    .badge-caution   { background: #fff3e0; color: #e65100; border-color: #ffb74d; }
+    .badge-closed    { background: #fafafa; color: #9e9e9e; border-color: #bdbdbd; }
+
+    /* ── Tsunami Banner ── */
+    .tsunami { border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; display: flex; align-items: flex-start; gap: 12px; font-size: 13px; }
+    .tsunami-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .tsunami-label { font-weight: 700; font-size: 11px; letter-spacing: 1px; display: block; margin-bottom: 3px; }
+    .t-safe   { background: #e8f5e9; border: 1px solid #a5d6a7; color: #1b5e20; }
+    .t-ok     { background: #fff8e1; border: 1px solid #ffe082; color: #7d4e00; }
+    .t-warn   { background: #fff3e0; border: 1px solid #ffb74d; color: #bf360c; }
+
+    /* ── Info Table ── */
+    .info-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    .info-table th { background: var(--sand); color: var(--mid); font-weight: 700; font-size: 11px; padding: 7px 12px; text-align: left; border-bottom: 1px solid var(--border); width: 30%; }
+    .info-table td { padding: 7px 12px; border-bottom: 1px solid #eef3f9; }
+    .info-table tr:last-child td, .info-table tr:last-child th { border-bottom: none; }
+    .free-badge { display: inline-block; background: #e8f5e9; color: #1b5e20; font-weight: 700; font-size: 11px; border-radius: 4px; padding: 1px 7px; }
+    .warn-badge { display: inline-block; background: #fff3e0; color: #e65100; font-weight: 700; font-size: 11px; border-radius: 4px; padding: 1px 7px; }
+
+    /* ── Rating Row ── */
+    .rating-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+    .r-item { background: var(--sand); border-radius: 8px; padding: 10px 12px; }
+    .r-label { font-size: 10px; color: var(--mid); margin-bottom: 4px; }
+    .r-val   { font-size: 12px; font-weight: 700; line-height: 1.4; }
+    .rv-good { color: #1b5e20; }
+    .rv-ok   { color: #1565c0; }
+    .rv-mid  { color: #e65100; }
+
+    /* ── Info Chips ── */
+    .info-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .chip { font-size: 11px; font-weight: 500; border-radius: 20px; padding: 4px 12px; }
+    .chip-default { background: #f0f0f0; color: var(--dark); }
+    .chip-good    { background: #e8f5e9; color: #2e7d32; }
+    .chip-warn    { background: #fff3e0; color: #e65100; }
+    .chip-info    { background: #e3f2fd; color: #1565c0; }
+    .chip-free    { background: #e8f5e9; color: #1b5e20; font-weight: 700; }
+
+    /* ── Merit / Demerit ── */
+    .md-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .md-box { border-radius: 10px; padding: 14px 16px; }
+    .md-merit   { background: #f0faf0; border: 1px solid #c8e6c9; }
+    .md-demerit { background: #fff8f0; border: 1px solid #ffccbc; }
+    .md-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+    .md-merit   .md-title { color: #2e7d32; }
+    .md-demerit .md-title { color: #bf360c; }
+    .md-list { list-style: none; }
+    .md-list li { font-size: 12px; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; line-height: 1.55; }
+    .md-merit   .md-list li::before { content: "✓"; color: #2e7d32; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .md-demerit .md-list li::before { content: "–"; color: #bf360c; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Closed Notice ── */
+    .closed-notice { background: #f5f5f5; border: 1px solid #bdbdbd; border-radius: 10px; padding: 16px 20px; color: #757575; font-size: 13px; margin-bottom: 16px; }
+    .closed-notice strong { color: #424242; }
+
+    /* ── Model Plan ── */
+    .model-plan { background: white; border-radius: 16px; border: 2px solid var(--primary); overflow: hidden; margin-bottom: 22px; }
+    .model-plan-header { background: var(--primary); color: white; padding: 14px 24px; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+    .model-day { padding: 18px 24px; border-bottom: 1px solid var(--border); }
+    .model-day:last-child { border-bottom: none; }
+    .day-label { display: inline-block; background: var(--primary); color: white; font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 10px; margin-bottom: 10px; }
+    .day-items { list-style: none; }
+    .day-items li { font-size: 13px; padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.55; }
+    .day-items li::before { content: "▸"; color: var(--primary); flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Summary Table ── */
+    .summary-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+    .summary-table th { background: var(--primary); color: white; font-size: 11px; font-weight: 700; padding: 8px 12px; text-align: left; }
+    .summary-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .summary-table tr:last-child td { border-bottom: none; }
+    .summary-table tr:nth-child(even) td { background: var(--sand); }
+    .ev-great { color: #1b5e20; font-weight: 700; }
+    .ev-ok    { color: #1565c0; font-weight: 700; }
+    .ev-mid   { color: #e65100; font-weight: 700; }
+    .ev-na    { color: #9e9e9e; }
+
+    /* ── Footer ── */
+    .footer { background: #1a1a2e; color: rgba(255,255,255,0.5); text-align: center; padding: 24px; font-size: 12px; letter-spacing: 1px; }
+
+    @media (max-width: 620px) {
+      .cover { padding: 48px 20px 36px; }
+      .cand-body { padding: 18px 18px; }
+      .rating-row { grid-template-columns: 1fr 1fr; }
+      .md-grid { grid-template-columns: 1fr; }
+      .cand-header { flex-direction: column; }
+      .info-table th { width: 36%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ▼ Cover -->
+<div class="cover">
+  <div class="cover-badge">静岡県（富士宮）旅行候補リスト</div>
+  <h1>候補スポット一覧</h1>
+  <h2>宿泊 ・ 観光 ・ 食事</h2>
+  <div class="cover-chips">
+    <div class="cover-chip">👨‍👩‍👧 大人2名 ＋ 子供1名（2歳半）</div>
+    <div class="cover-chip">🗓 GW2026</div>
+    <div class="cover-chip">🚗 マイカー移動</div>
+    <div class="cover-chip">🌊 津波安全重視（内陸・高台）</div>
+  </div>
+</div>
+
+<!-- ▼ Sub Nav -->
+<div class="subnav">
+  <div class="subnav-inner">
+    <a href="#hotels">🏨 宿泊候補</a>
+    <a href="#fujinomiya">🗻 富士宮エリア</a>
+    <a href="#fuji-city">🏔️ 富士市・近郊</a>
+    <a href="#shizuoka">🦁 静岡市エリア</a>
+    <a href="#yaizu">🐟 焼津エリア</a>
+    <a href="#food">🍣 食事候補</a>
+    <a href="#model">📅 モデルプラン</a>
+    <a href="../index.html" class="back">← プラン一覧へ戻る</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════ 宿泊候補 ════════════════════ -->
+  <div class="section-block" id="hotels">
+    <div class="section-header">
+      <div class="section-icon">🏨</div>
+      <div>
+        <div class="section-title">宿泊候補</div>
+        <div class="section-sub">津波リスク（内陸・高台優先）・子供設備・寝具環境を総合評価</div>
+      </div>
+    </div>
+
+    <!-- 休暇村富士 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#1565c0,#e65100);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">休暇村 富士</div>
+            <div class="cand-loc">📍 静岡県富士宮市佐折634（田貫湖畔）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ 最推奨</span>
+            <span class="badge badge-safe">🛡️ 津波ゼロリスク</span>
+          </div>
+        </div>
+        <div class="tsunami t-safe">
+          <span class="tsunami-icon">🗻</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◎ 極めて安全（標高約650〜700m）</span>
+            田貫湖畔の山間部。海岸線から直線距離で約30km以上の内陸。南海トラフ地震でも津波の影響ゼロ。
+          </div>
+        </div>
+        <div class="rating-row">
+          <div class="r-item"><div class="r-label">低めの寝具</div><div class="r-val rv-ok">◯ コテージ（LDK付）あり。和室布団は要確認</div></div>
+          <div class="r-item"><div class="r-label">子供アメニティ</div><div class="r-val rv-ok">◯ タオル・浴衣・歯磨き完備。子供サイズ要確認</div></div>
+          <div class="r-item"><div class="r-label">子供施設</div><div class="r-val rv-ok">◯ 田貫湖散策路・コテージ・ビュッフェ食事</div></div>
+        </div>
+        <table class="info-table">
+          <tr><th>温泉</th><td>富士田貫湖温泉（アルカリ性単純泉・大浴場）</td></tr>
+          <tr><th>食事</th><td>ビュッフェ（桜えびなど静岡食材）・朝夕付プランあり</td></tr>
+          <tr><th>料金目安</th><td>大人1泊2食付き 約16,500円〜（2名合計）</td></tr>
+          <tr><th>アクセス</th><td>新東名・新富士ICから西富士道路経由 約40分 / JR富士宮駅からバス約45分</td></tr>
+          <tr><th>公式サイト</th><td><a href="https://www.qkamura.or.jp/fuji/" target="_blank" style="color:var(--primary);">qkamura.or.jp/fuji/</a></td></tr>
+        </table>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>全室から富士山ビュー（ダイヤモンド富士・逆さ富士）</li>
+              <li>田貫湖畔の自然で2歳児が歩き回れる安全な環境</li>
+              <li>コテージプランあり（1棟貸し・ペット可棟あり）</li>
+              <li>まかいの牧場・白糸の滝まで車で10〜20分</li>
+              <li>標高650〜700mで南海トラフ津波の影響ゼロ</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>最寄りICから30〜40分と交通が不便</li>
+              <li>周辺にコンビニ・外食店がほぼない（食事はホテル内）</li>
+              <li>GW期間は予約が取りにくい（早期予約必須）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 朝霧高原エリア全般 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#2e7d32,#1565c0);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">朝霧高原エリアの宿泊施設</div>
+            <div class="cand-loc">📍 富士宮市北部・朝霧高原（標高700〜1,000m）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🛡️ 津波ゼロリスク</span>
+            <span class="badge badge-info">🏕️ コテージ系</span>
+          </div>
+        </div>
+        <div class="tsunami t-safe">
+          <span class="tsunami-icon">🗻</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◎ 標高700〜1,000m・内陸山間部</span>
+            海岸線から大きく離れた富士山麓の高台。南海トラフ地震による津波被害の想定なし。
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-info">標高700〜1,000m</span>
+          <span class="chip chip-default">まかいの牧場まで車5〜10分</span>
+          <span class="chip chip-warn">GW朝晩は冷える（防寒必須）</span>
+          <span class="chip chip-info">自然体験豊富</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>富士山すそのの大自然を体感できる</li>
+              <li>まかいの牧場・富士山こどもの国へアクセス最良</li>
+              <li>コテージで自炊可能な施設も多い</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>子供向けアメニティが揃った高品質ホテルは少ない</li>
+              <li>GW朝晩は気温が低い（防寒対策必須）</li>
+              <li>飲食店が近くに少ない</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /hotels -->
+
+  <!-- ════════════════════ 富士宮エリア ════════════════════ -->
+  <div class="section-block" id="fujinomiya">
+    <div class="section-header">
+      <div class="section-icon">🗻</div>
+      <div>
+        <div class="section-title">富士宮エリアの観光・遊び場</div>
+        <div class="section-sub">まかいの牧場・白糸の滝・浅間大社（富士宮市内）</div>
+      </div>
+    </div>
+
+    <!-- まかいの牧場 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#2e7d32,#ff6f00);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">まかいの牧場</div>
+            <div class="cand-loc">📍 静岡県富士宮市内野1327（朝霧高原・標高約600〜700m）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend2">⭐ 富士宮最推奨</span>
+            <span class="badge badge-safe">🛡️ 津波安全</span>
+          </div>
+        </div>
+        <div class="tsunami t-safe">
+          <span class="tsunami-icon">🗻</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◎ 内陸・標高600m以上</span>
+            朝霧高原エリアに位置し、南海トラフ地震の津波影響なし。
+          </div>
+        </div>
+        <table class="info-table">
+          <tr><th>営業時間</th><td>9:30〜17:30（3〜10月）/ 9:30〜16:30（11〜2月）</td></tr>
+          <tr><th>定休日</th><td>4〜11月は不定休 / 12〜3月は水・木曜</td></tr>
+          <tr><th>入場料 大人</th><td>1,200円（3〜11月）/ 1,000円（12〜2月）</td></tr>
+          <tr><th>入場料 3歳〜小学生</th><td>900円（3〜11月）/ 700円（12〜2月）</td></tr>
+          <tr><th>入場料 2歳以下</th><td><span class="free-badge">無料</span></td></tr>
+          <tr><th>駐車場</th><td><span class="free-badge">無料 500台</span></td></tr>
+          <tr><th>アクセス</th><td>JR富士宮駅から富士山駅行きバス約30分 / 東名富士ICから約30分</td></tr>
+          <tr><th>公式サイト</th><td><a href="https://www.makaino.com/" target="_blank" style="color:var(--primary);">makaino.com</a></td></tr>
+        </table>
+        <div class="info-chips">
+          <span class="chip chip-free">2歳以下無料</span>
+          <span class="chip chip-good">牛の乳しぼり（無料体験）</span>
+          <span class="chip chip-good">動物ふれあい</span>
+          <span class="chip chip-good">幼児アスレチック</span>
+          <span class="chip chip-default">富士山絶景</span>
+          <span class="chip chip-info">ジェラート・レストラン</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>2歳以下入場無料・2〜3歳が最も多い人気施設</li>
+              <li>牛の乳しぼり・羊・ヤギ等とのふれあいが楽しい</li>
+              <li>富士山を背景に絶景写真が撮れる</li>
+              <li>入場不要でジェラートやレストランだけでも利用可</li>
+              <li>白糸の滝・休暇村富士から車で10〜20分</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW時期は駐車場が混雑（早朝来園推奨）</li>
+              <li>乗馬など一部アクティビティは有料（700円〜）</li>
+              <li>雨天時は屋外メインのため楽しみにくい</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 白糸の滝 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#0277bd,#26c6da);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">白糸の滝・音止の滝</div>
+            <div class="cand-loc">📍 静岡県富士宮市上井出（富士山世界文化遺産構成資産）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🌍 世界遺産</span>
+            <span class="badge badge-info">入場無料</span>
+          </div>
+        </div>
+        <div class="tsunami t-safe">
+          <span class="tsunami-icon">🗻</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◎ 内陸立地</span>
+            富士宮市内の内陸部。津波の影響なし。
+          </div>
+        </div>
+        <table class="info-table">
+          <tr><th>入場料</th><td><span class="free-badge">無料</span>（駐車場500円/日のみ）</td></tr>
+          <tr><th>観光案内所</th><td>9:00〜17:00（無休）</td></tr>
+          <tr><th>駐車場</th><td>乗用車 500円/日・100台以上</td></tr>
+          <tr><th>アクセス</th><td>東名富士IC・新東名新富士ICから約30分</td></tr>
+        </table>
+        <div class="info-chips">
+          <span class="chip chip-good">高さ20m×幅150mの絶壁</span>
+          <span class="chip chip-good">遊歩道整備済み</span>
+          <span class="chip chip-default">飲食店多数あり</span>
+          <span class="chip chip-info">日本の滝百選</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>富士山世界遺産の構成資産で大人の観光価値が高い</li>
+              <li>無料で楽しめる（駐車場代のみ）</li>
+              <li>まかいの牧場から車で約10分と組み合わせやすい</li>
+              <li>周辺に富士宮焼きそば・しらす丼の食堂多数</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>滝に近づくと濡れる場合あり（防水対策推奨）</li>
+              <li>GW時期は駐車場が満車になりやすい（早朝推奨）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 富士山本宮浅間大社 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#b71c1c,#e53935);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">富士山本宮浅間大社</div>
+            <div class="cand-loc">📍 静岡県富士宮市宮町1-1（富士宮市街中心）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">⛩️ 富士山信仰の総本社</span>
+          </div>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>富士宮市街観光のハイライト・大人の満足度が高い</li>
+              <li>富士宮焼きそばの名店が境内周辺に集中</li>
+              <li>浅間大社前のわき水公園で2歳児遊べる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>2歳児が積極的に楽しめる要素は少なめ（散策のみ）</li>
+              <li>GW時期は参拝客多く混雑</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fujinomiya -->
+
+  <!-- ════════════════════ 富士市・近郊エリア ════════════════════ -->
+  <div class="section-block" id="fuji-city">
+    <div class="section-header">
+      <div class="section-icon">🏔️</div>
+      <div>
+        <div class="section-title">富士市・近郊エリア</div>
+        <div class="section-sub">富士山こどもの国（富士市・十里木高原）</div>
+      </div>
+    </div>
+
+    <!-- 富士山こどもの国 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#1565c0,#26a69a);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">富士山こどもの国</div>
+            <div class="cand-loc">📍 静岡県富士市大渕（十里木高原・標高約700〜800m）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend2">⭐ 2歳無料・大型施設</span>
+            <span class="badge badge-safe">🛡️ 津波安全</span>
+          </div>
+        </div>
+        <div class="tsunami t-safe">
+          <span class="tsunami-icon">🗻</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◎ 標高約700〜800mの内陸高原</span>
+            十里木高原に位置し、南海トラフ地震の津波影響なし。
+          </div>
+        </div>
+        <table class="info-table">
+          <tr><th>営業時間</th><td>9:00〜17:00（10〜3月は〜16:00）</td></tr>
+          <tr><th>定休日</th><td>火曜（5〜10月・GW・祝日は無休）</td></tr>
+          <tr><th>入場料 大人</th><td>820円</td></tr>
+          <tr><th>入場料 小学生未満（2歳）</th><td><span class="free-badge">無料</span></td></tr>
+          <tr><th>敷地面積</th><td>94.5ヘクタール（非常に広大）</td></tr>
+          <tr><th>アクセス</th><td>東名富士ICから約20分</td></tr>
+          <tr><th>公式サイト</th><td><a href="https://www.kodomo.or.jp/" target="_blank" style="color:var(--primary);">kodomo.or.jp</a></td></tr>
+        </table>
+        <div class="info-chips">
+          <span class="chip chip-free">2歳以下無料</span>
+          <span class="chip chip-good">動物ふれあい（まきば）</span>
+          <span class="chip chip-good">GW期間無休</span>
+          <span class="chip chip-info">宿泊・キャンプ場あり</span>
+          <span class="chip chip-default">レストランあり</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>2歳は入場無料・GWは無休</li>
+              <li>まきばで動物ふれあい・引き馬体験（2歳対応）</li>
+              <li>富士山を背景に広大な自然体験</li>
+              <li>木工クラフト・幼児向け富士山型遊具あり</li>
+              <li>キャンプ・宿泊施設も併設</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>広すぎて2歳連れでは全部回れない（動線計画推奨）</li>
+              <li>富士宮市街から車で30〜40分</li>
+              <li>土・日・GWは混雑</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /fuji-city -->
+
+  <!-- ════════════════════ 静岡市エリア ════════════════════ -->
+  <div class="section-block" id="shizuoka">
+    <div class="section-header">
+      <div class="section-icon">🦁</div>
+      <div>
+        <div class="section-title">静岡市エリア</div>
+        <div class="section-sub">富士宮から車で約45〜60分。日帰り可能圏内。</div>
+      </div>
+    </div>
+
+    <!-- 日本平動物園 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#e65100,#ffa000);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">静岡市立 日本平動物園</div>
+            <div class="cand-loc">📍 静岡市駿河区池田1767-6（丘上立地）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend2">⭐ 2歳無料・国内有数の動物園</span>
+          </div>
+        </div>
+        <div class="tsunami t-ok">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ◯ 丘上立地で比較的安全</span>
+            日本平の丘上に位置。静岡市内だが動物園自体は高台で安全性が高い。（宿泊は推奨しない）
+          </div>
+        </div>
+        <table class="info-table">
+          <tr><th>営業時間</th><td>9:00〜16:30（入園〜16:00）</td></tr>
+          <tr><th>定休日</th><td>月曜（祝日の場合は翌平日）、年末年始</td></tr>
+          <tr><th>入場料 大人</th><td>620円</td></tr>
+          <tr><th>入場料 未就学児（2歳）</th><td><span class="free-badge">無料</span></td></tr>
+          <tr><th>駐車場</th><td>620円/回・約1,000台</td></tr>
+          <tr><th>アクセス（富士宮から）</th><td>新東名新富士IC → 新静岡IC → 約60分</td></tr>
+          <tr><th>公式サイト</th><td><a href="https://www.nhdzoo.jp/" target="_blank" style="color:var(--primary);">nhdzoo.jp</a></td></tr>
+        </table>
+        <div class="info-chips">
+          <span class="chip chip-free">2歳以下無料</span>
+          <span class="chip chip-good">来場者の2〜3歳が最も多い</span>
+          <span class="chip chip-good">雨天でも楽しめる屋内施設</span>
+          <span class="chip chip-info">レッサーパンダの聖地</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>2歳無料・2〜3歳が最多来場年齢の証明済み</li>
+              <li>猛獣館・フライングケージなど国内有数の施設</li>
+              <li>雨天対応の屋内施設が充実</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>富士宮から約1時間と距離がある</li>
+              <li>月曜定休のため旅程によっては行けない</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 東海大学海洋科学博物館（閉館） -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:#bdbdbd;"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name" style="color:#9e9e9e;">東海大学海洋科学博物館</div>
+            <div class="cand-loc">📍 静岡市清水区三保（三保松原）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-closed">🚫 2024年10月閉館済み</span>
+          </div>
+        </div>
+        <div class="closed-notice">
+          <strong>⚠️ 閉館のお知らせ</strong><br>
+          東海大学海洋科学博物館は、2024年10月末日をもって一般公開を終了しました。訪問不可。<br>
+          代替として、<strong>2026年4月に静岡市の「海洋・地球総合ミュージアム（仮称）」がオープン予定</strong>。GW2026時点でのオープン状況を事前に確認してください。
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /shizuoka -->
+
+  <!-- ════════════════════ 焼津エリア ════════════════════ -->
+  <div class="section-block" id="yaizu">
+    <div class="section-header">
+      <div class="section-icon">🐟</div>
+      <div>
+        <div class="section-title">焼津エリア</div>
+        <div class="section-sub">富士宮から車で約60〜70分。⚠️ 焼津市は津波注意エリア（日帰り推奨）</div>
+      </div>
+    </div>
+
+    <!-- ターントクルこども館 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#6a1b9a,#ad1457);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">ターントクルこども館</div>
+            <div class="cand-loc">📍 静岡県焼津市栄町5-1-1（JR焼津駅南口から徒歩6分）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend2">⭐ 2歳に最適な屋内施設</span>
+            <span class="badge badge-caution">⚠️ 日帰り推奨</span>
+          </div>
+        </div>
+        <div class="tsunami t-warn">
+          <span class="tsunami-icon">🌊</span>
+          <div>
+            <span class="tsunami-label">津波リスク ⚠️ 焼津市は南海トラフ津波想定エリア</span>
+            焼津市は海岸線に近い。<strong>日帰り観光は問題ないが、宿泊はリスクあり。</strong>各自治体のハザードマップで浸水想定を必ず確認。
+          </div>
+        </div>
+        <table class="info-table">
+          <tr><th>施設</th><td>焼津おもちゃ美術館（2〜3階）＋ やいづ えほんと（1階・無料）</td></tr>
+          <tr><th>営業時間</th><td>焼津おもちゃ美術館：10:00〜16:00（午前・午後の入替制）</td></tr>
+          <tr><th>定休日</th><td>水曜（祝日の場合は翌日）、年末年始</td></tr>
+          <tr><th>入場料 大人</th><td>1,000円</td></tr>
+          <tr><th>入場料 2歳（未就学児・市外）</th><td>500円（焼津市在住なら無料）</td></tr>
+          <tr><th>入場料 1歳未満</th><td><span class="free-badge">無料</span></td></tr>
+          <tr><th>予約</th><td><span class="warn-badge">事前予約必須</span>（パスマーケット等）</td></tr>
+          <tr><th>駐車場</th><td>近隣有料（施設利用で最初の2時間無料）</td></tr>
+          <tr><th>アクセス（富士宮から）</th><td>東名富士IC → 焼津IC → 約60〜70分</td></tr>
+          <tr><th>公式サイト</th><td><a href="https://yaizu-kodomokan.com/" target="_blank" style="color:var(--primary);">yaizu-kodomokan.com</a></td></tr>
+        </table>
+        <div class="info-chips">
+          <span class="chip chip-good">全国最大級のヒノキのたまごプール</span>
+          <span class="chip chip-good">木のおもちゃで遊べる</span>
+          <span class="chip chip-good">雨天でも完全屋内</span>
+          <span class="chip chip-warn">事前予約必須</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>2歳児に最適な木のおもちゃ・屋内コンテンツが豊富</li>
+              <li>雨天でも完全に楽しめる（全屋内）</li>
+              <li>焼津さかなセンターと同日訪問が可能</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>富士宮から約70kmと距離がある</li>
+              <li>事前予約必須（当日券が取れない場合あり）</li>
+              <li>焼津市内の宿泊は津波リスクのため非推奨</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /yaizu -->
+
+  <!-- ════════════════════ 食事候補 ════════════════════ -->
+  <div class="section-block" id="food">
+    <div class="section-header">
+      <div class="section-icon">🍣</div>
+      <div>
+        <div class="section-title">食事候補</div>
+        <div class="section-sub">海鮮料理・富士宮焼きそば・静岡グルメ</div>
+      </div>
+    </div>
+
+    <!-- 焼津さかなセンター -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#0277bd,#0097a7);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">焼津さかなセンター</div>
+            <div class="cand-loc">📍 静岡県焼津市八楠4丁目13番地の7</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-recommend">⭐ 海鮮グルメの王道</span>
+            <span class="badge badge-caution">⚠️ 焼津市（津波注意）</span>
+          </div>
+        </div>
+        <table class="info-table">
+          <tr><th>営業時間（物販）</th><td>9:00〜17:00</td></tr>
+          <tr><th>大食堂「渚」</th><td>平日 11:00〜14:30 / 土日祝 10:30〜15:00</td></tr>
+          <tr><th>定休日</th><td>1月1日、臨時休業あり。水曜は一部店舗のみ</td></tr>
+          <tr><th>店舗数</th><td>約70店舗</td></tr>
+          <tr><th>駐車場</th><td><span class="free-badge">無料 乗用車600台</span></td></tr>
+          <tr><th>アクセス（富士宮から）</th><td>東名富士IC → 焼津IC → 約60〜70km・約1時間</td></tr>
+          <tr><th>公式サイト</th><td><a href="https://www.sakana-center.com/" target="_blank" style="color:var(--primary);">sakana-center.com</a></td></tr>
+        </table>
+        <div class="info-chips">
+          <span class="chip chip-good">マグロ・生しらす・生桜えび</span>
+          <span class="chip chip-good">8種舟盛刺身定食</span>
+          <span class="chip chip-default">お子様メニューあり</span>
+          <span class="chip chip-free">無料大型駐車場</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>コスパ最高の海鮮料理・600台無料駐車場</li>
+              <li>ターントクルこども館と同日に焼津で完結できる</li>
+              <li>静岡の海鮮を一度に堪能できる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>富士宮から約70km・1時間と距離がある</li>
+              <li>土日昼は大食堂が混雑しやすい</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 白糸の滝周辺の海鮮食堂 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#2e7d32,#0277bd);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">白糸の滝周辺の食堂・富士宮焼きそば</div>
+            <div class="cand-loc">📍 富士宮市上井出周辺（白糸の滝〜まかいの牧場エリア）</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🗻 宿泊エリアから近い</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">釜上げしらす丼富士山盛り（1,300円）</span>
+          <span class="chip chip-good">八幡御膳（生しらす・生桜えび・釜揚げしらす三種盛り）数量限定</span>
+          <span class="chip chip-default">むめさん（富士宮焼きそば）</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>まかいの牧場・白糸の滝と同エリアで移動不要</li>
+              <li>休暇村富士（宿泊）から車で10〜15分</li>
+              <li>しらす丼と富士宮焼きそば両方楽しめる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>店舗数が少ない（事前確認推奨）</li>
+              <li>定休日や混雑で入れない場合あり</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 富士宮焼きそば -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#bf360c,#e64a19);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">富士宮焼きそば（各店）</div>
+            <div class="cand-loc">📍 富士宮市街・浅間大社周辺</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-info">🏆 B-1グランプリ初代王者</span>
+          </div>
+        </div>
+        <table class="info-table">
+          <tr><th>さの食堂</th><td>富士宮市大宮町21-1（老舗・地元人気）</td></tr>
+          <tr><th>富士宮やきそば学会アンテナショップ</th><td>富士宮市宮町4-23（10:00〜17:00）</td></tr>
+          <tr><th>はっちゃん</th><td>しぐれ焼き（お好み焼き風アレンジ）が名物</td></tr>
+        </table>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>富士宮名物で大人・子供ともに食べやすい</li>
+              <li>浅間大社周辺で観光と組み合わせやすい</li>
+              <li>リーズナブルで気軽に食べられる</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>海鮮メインではない（B級グルメ）</li>
+              <li>人気店はGW期間に行列ができる</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 沼津魚がし鮨 富士宮店 -->
+    <div class="cand-card">
+      <div class="cand-accent" style="background:linear-gradient(90deg,#0277bd,#26c6da);"></div>
+      <div class="cand-body">
+        <div class="cand-header">
+          <div>
+            <div class="cand-name">沼津魚がし鮨 流れ鮨 富士宮店</div>
+            <div class="cand-loc">📍 静岡県富士宮市富士見ケ丘425-1</div>
+          </div>
+          <div class="cand-badges">
+            <span class="badge badge-safe">🗻 富士宮市内（津波安全）</span>
+          </div>
+        </div>
+        <div class="info-chips">
+          <span class="chip chip-good">沼津魚市場から毎朝直送</span>
+          <span class="chip chip-good">駿河湾の新鮮なネタ</span>
+          <span class="chip chip-default">海鮮丼・にぎり</span>
+        </div>
+        <div class="md-grid">
+          <div class="md-box md-merit">
+            <div class="md-title">✅ メリット</div>
+            <ul class="md-list">
+              <li>富士宮市内で海鮮が食べられる</li>
+              <li>浅間大社・焼きそばとの組み合わせに最適</li>
+            </ul>
+          </div>
+          <div class="md-box md-demerit">
+            <div class="md-title">❌ デメリット</div>
+            <ul class="md-list">
+              <li>GW期間は待ち時間が発生する場合あり</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /food -->
+
+  <!-- ════════════════════ モデルプラン ════════════════════ -->
+  <div class="section-block" id="model">
+    <div class="section-header">
+      <div class="section-icon">📅</div>
+      <div>
+        <div class="section-title">推奨モデルプラン（2泊3日）</div>
+        <div class="section-sub">GW2026想定 ・ 富士宮・朝霧高原拠点</div>
+      </div>
+    </div>
+
+    <div class="model-plan">
+      <div class="model-plan-header">🗻 富士宮・朝霧高原メインプラン（津波最安全・2歳無料スポット中心）</div>
+
+      <div class="model-day">
+        <div class="day-label">Day 1</div>
+        <ul class="day-items">
+          <li>午前：富士山本宮浅間大社 参拝（富士宮市街）</li>
+          <li>昼食：富士宮焼きそば（さの食堂・アンテナショップ等）</li>
+          <li>午後：まかいの牧場（動物ふれあい・乳しぼり体験・2歳無料）</li>
+          <li>夕方：休暇村 富士 チェックイン（田貫湖畔・標高650m）</li>
+          <li>夕食：ビュッフェ（桜えびなど静岡食材）</li>
+        </ul>
+      </div>
+
+      <div class="model-day">
+        <div class="day-label">Day 2</div>
+        <ul class="day-items">
+          <li>早朝：田貫湖から富士山を撮影（逆さ富士・ダイヤモンド富士）</li>
+          <li>午前：白糸の滝・音止の滝（無料・世界遺産・駐車場500円）</li>
+          <li>昼食：白糸の滝周辺 しらす丼・富士宮焼きそば</li>
+          <li>午後：富士山こどもの国（まきば・動物ふれあい・2歳無料）</li>
+          <li>夕食：富士宮市内 海鮮（沼津魚がし鮨 富士宮店）</li>
+        </ul>
+      </div>
+
+      <div class="model-day">
+        <div class="day-label">Day 3</div>
+        <ul class="day-items">
+          <li>午前：ターントクルこども館（焼津・木のおもちゃ美術館・2歳500円）※要事前予約</li>
+          <li>昼食：焼津さかなセンター（海鮮丼・刺身・舟盛り）</li>
+          <li>午後：日本平動物園（静岡市・2歳無料）または帰路</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /model -->
+
+  <!-- ════════════════════ 総合評価表 ════════════════════ -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <div>
+        <div class="section-title">候補地 総合評価まとめ</div>
+        <div class="section-sub">子供評価・津波リスク・2歳料金の一覧</div>
+      </div>
+    </div>
+
+    <div class="cand-card">
+      <div class="cand-body" style="padding:18px 22px;">
+        <table class="summary-table">
+          <tr>
+            <th>施設名</th>
+            <th>子供評価</th>
+            <th>津波リスク</th>
+            <th>2歳料金</th>
+            <th>備考</th>
+          </tr>
+          <tr><td>まかいの牧場</td><td class="ev-great">◎</td><td class="ev-great">◎ 標高600m+</td><td class="ev-great">無料</td><td>富士宮市内最推奨</td></tr>
+          <tr><td>白糸の滝</td><td class="ev-ok">◯</td><td class="ev-great">◎ 内陸</td><td class="ev-great">無料（駐車500円）</td><td>世界遺産</td></tr>
+          <tr><td>富士山本宮浅間大社</td><td class="ev-mid">△</td><td class="ev-great">◎ 内陸</td><td class="ev-great">無料</td><td>観光・文化</td></tr>
+          <tr><td>富士山こどもの国</td><td class="ev-great">◎</td><td class="ev-great">◎ 標高700m+</td><td class="ev-great">無料</td><td>富士市・広大</td></tr>
+          <tr><td>日本平動物園</td><td class="ev-great">◎</td><td class="ev-ok">◯ 丘上立地</td><td class="ev-great">無料</td><td>静岡市・雨天◎</td></tr>
+          <tr><td>ターントクルこども館</td><td class="ev-great">◎</td><td class="ev-mid">⚠️ 焼津市（要確認）</td><td class="ev-mid">500円（市外）</td><td>日帰り推奨・要予約</td></tr>
+          <tr><td>焼津さかなセンター</td><td class="ev-mid">△（食事）</td><td class="ev-mid">⚠️ 焼津市（要確認）</td><td class="ev-na">—</td><td>日帰り・海鮮</td></tr>
+          <tr><td>東海大学海洋科学博物館</td><td class="ev-na">—</td><td class="ev-na">—</td><td class="ev-na">—</td><td>2024年10月閉館</td></tr>
+          <tr><td><strong>休暇村 富士（宿泊）</strong></td><td class="ev-ok">◯</td><td class="ev-great"><strong>◎ 標高650m+</strong></td><td class="ev-na">—（子供料金要確認）</td><td>全室富士山ビュー・温泉</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="footer">GW2026 静岡県（富士宮）旅行候補リスト ― 大人2名 ＋ 子供1名（2歳半）</div>
+</body>
+</html>
